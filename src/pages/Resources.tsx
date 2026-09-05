@@ -123,10 +123,12 @@ export function Resources() {
                           border-accent/20">
             <CardContent className="py-4">
               <p className="font-sans text-sm text-content-primary">
-                <strong className="font-semibold">Tech stack:</strong> React 18 +
-                Vite, TypeScript, Tailwind CSS v4, shadcn/ui, Framer Motion
-                (motion/react), React Router v6, Phosphor Icons. Built with
-                AI-assisted development using Claude Code.
+                <strong className="font-semibold">Tech stack:</strong> React
+                19 + Vite, TypeScript, Tailwind CSS v4, shadcn/ui, Motion
+                (motion/react), React Router v7, Phosphor Icons. Built with
+                AI-assisted development using the OpenCode 5-agent dev team and
+                the Graphify codebase knowledge graph — a meta-demonstration of
+                the lesson itself.
               </p>
             </CardContent>
           </Card>
