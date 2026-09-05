@@ -16,7 +16,7 @@
         "C:\\Users\\Danniel Canary\\AppData\\Local\\pipx\\pipx\\venvs\\graphifyy\\Scripts\\python.exe",
         "-m",
         "graphify.serve",
-        "C:\\Users\\Danniel Canary\\.opencode\\graphify-out\\graph.json"
+        "C:\\Users\\Danniel Canary\\Desktop\\ai-prompting\\prompting-101-demo\\graphify-out\\graph.json"
       ],
       "enabled": true
     }
