@@ -23,6 +23,8 @@
   --color-red-tint: #FEF2F2;
   --color-blue: #3B82F6;
   --color-blue-tint: #EFF6FF;
+  --color-purple: #7C3AED;
+  --color-purple-tint: #F5F3FF;
 
   /* shadcn/ui compatible variables */
   --color-background: #FAFAF9;

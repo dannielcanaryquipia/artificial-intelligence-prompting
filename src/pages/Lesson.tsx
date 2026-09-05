@@ -241,8 +241,7 @@ export function Lesson() {
               <AccordionContent>
                 <p className="font-sans text-sm text-content-secondary mb-6">
                   The structure of this demo teaching session at The Lewis
-                  College. Collapsed so it can be referenced without being
-                  read out during the demo.
+                  College.
                 </p>
 
                 <div className="space-y-3">

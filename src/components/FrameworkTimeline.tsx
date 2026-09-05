@@ -37,7 +37,7 @@ const steps = [
       "What should it avoid or stay within? Length, tools allowed, don't rewrite everything.",
     example:
       "Don't rewrite the whole function using a different approach like `Set` — I need to understand what's wrong with the loop version specifically, since that's what we're learning this week",
-    color: "stone",
+    color: "purple",
   },
 ];
 
@@ -57,10 +57,10 @@ const colorMap: Record<string, { bg: string; text: string; border: string }> = {
     text: "text-emerald",
     border: "border-emerald",
   },
-  stone: {
-    bg: "bg-surface-raised",
-    text: "text-content-secondary",
-    border: "border-content-secondary",
+  purple: {
+    bg: "bg-purple-tint",
+    text: "text-purple",
+    border: "border-purple",
   },
 };
 

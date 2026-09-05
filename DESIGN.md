@@ -30,6 +30,7 @@
 | **Emerald** | `#10B981` | `#ECFDF5` | Success, "improved" prompt |
 | **Red** | `#EF4444` | `#FEF2F2` | Error, "weak" prompt |
 | **Blue** | `#3B82F6` | `#EFF6FF` | Informational, "context" element |
+| **Purple** | `#7C3AED` | `#F5F3FF` | "Constraints" element (deliberate exception to the no-purple rule, single flat token) |
 
 ---
 
@@ -135,7 +136,7 @@ All motion respects `useReducedMotion()` from `motion/react`.
 
 ## Anti-Slop Rules
 
-- Stone palette + amber accent only. No purple/blue gradients.
+- Stone palette + amber accent only. No purple/blue gradients (exception: the flat `purple` token used for the "Constraints" element — see color table above, not a gradient and not the main accent).
 - Left-aligned hero, left-aligned body copy. No centered text blocks (except hero headline).
 - No ALL-CAPS eyebrows above every heading.
 - No generic "Get Started" / "Learn More" CTAs.

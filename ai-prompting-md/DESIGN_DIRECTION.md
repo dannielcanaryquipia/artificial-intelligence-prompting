@@ -61,6 +61,8 @@ A terminal/editor-inspired palette with **warmth** — not cold blue-grey corpor
 | `red-50` | `#FEF2F2` | `bg-red-50` | Error background tint |
 | `blue-500` | `#3B82F6` | `text-blue-500` | Informational callouts, "context" element |
 | `blue-50` | `#EFF6FF` | `bg-blue-50` | Info background tint |
+| `purple-600` | `#7C3AED` | `text-purple` | "Constraints" element (deliberate exception to the no-purple rule; flat token, not a gradient) |
+| `purple-50` | `#F5F3FF` | `bg-purple-tint` | "Constraints" background tint |
 
 ### 2.4 Token Configuration
 
@@ -357,7 +359,7 @@ const safeTransition = reduce ? { duration: 0 } : promptTransition;
 | Pattern | Why it's banned | What to do instead |
 |---|---|---|
 | Warm cream `#f5f1ea` + terracotta `#b6553a` accent | Classic Claude/AI tell | Use stone + amber (our palette) |
-| AI purple/blue gradient `#7C3AED → #3B82F6` | Universal AI slop | Single amber accent, no gradients on text |
+| AI purple/blue gradient `#7C3AED → #3B82F6` | Universal AI slop | Single amber accent, no gradients on text. Exception: flat `purple` (`#7C3AED`, no tint-to-tint gradient) is used for the "Constraints" step only |
 | Generic SaaS rounded cards with grey shadow on everything | Template feel | Cards only when elevation communicates hierarchy. Use `border` + whitespace for grouping |
 | ALL-CAPS tracked eyebrow above every heading | The #1 AI tell per design-taste-frontend | Maximum 1 eyebrow per 3 sections. Most sections: headline alone is enough |
 | `Inter` as the only font, `slate-900` everywhere | LLM default | JetBrains Mono + Inter, stone palette |
