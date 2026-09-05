@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { PageHeader } from "@/components/motion/PageHeader";
 import { RevealSection } from "@/components/motion/RevealSection";
@@ -13,6 +14,7 @@ import { Badge } from "@/components/ui/badge";
 import { PromptComparison } from "@/components/PromptComparison";
 import { QrCard } from "@/components/QrCard";
 import { DetailDialog } from "@/components/DetailDialog";
+import { GlossaryTerm } from "@/components/GlossaryTerm";
 import { homepageExample, nestedLoopBugCode } from "@/data/promptExamples";
 import { projectGithubUrl } from "@/data/site";
 
@@ -30,7 +32,19 @@ const objectives = [
       },
       {
         heading: "Does prompt quality change output quality?",
-        body: "Yes. An AI can only work with what you give it. A vague prompt like \"fix my code\" produces a guess; a specific prompt that names the goal, the context, and the constraints produces an answer aimed at your real problem. Good instructions lead to good output.",
+        body: (
+          <>
+            Yes. An AI can only work with what you give it. A{" "}
+            <GlossaryTerm
+              term="vague"
+              definition='Vague means unclear or lacking specific detail — a statement that could mean many different things, so the listener (or the AI) has to guess what you actually meant. &quot;Fix my code&quot; is vague because it doesn&apos;t say what&apos;s broken, what kind of fix is wanted, or what to avoid changing. The opposite of vague is specific — which is exactly what CTFC is designed to force.'
+            />{" "}
+            prompt like &quot;fix my code&quot; produces a guess; a specific prompt
+            that names the goal, the context, and the constraints produces an
+            answer aimed at your real problem. Good instructions lead to good
+            output.
+          </>
+        ),
       },
     ],
   },
@@ -71,6 +85,8 @@ const objectives = [
 ];
 
 export function Home() {
+  const [promptOpen, setPromptOpen] = useState(false);
+
   return (
     <div>
       {/* Hero */}
@@ -80,6 +96,8 @@ export function Home() {
         subtitle="A short lesson on prompting as a real, learnable skill for IT work — not a trick, a technique."
         titleClassName="mb-6"
         slot={<QrCard />}
+        highlightWords={["prompt"]}
+        onTitleClick={() => setPromptOpen(true)}
       >
         <div className="mt-8">
           {projectGithubUrl ? (
@@ -107,6 +125,15 @@ export function Home() {
         </div>
       </PageHeader>
 
+      {/* "prompt" glossary popup, opened by clicking the hero title */}
+      <GlossaryTerm
+        term="prompt"
+        definition="A prompt is the instruction or question you give to an AI model to get a response."
+        open={promptOpen}
+        onOpenChange={setPromptOpen}
+        hideTrigger
+      />
+
       {/* Before/After Demo */}
       <section className="py-16 px-4 sm:px-6
                           bg-surface-raised">
@@ -120,11 +147,37 @@ export function Home() {
             what you get out.
           </p>
 
+          {/* Danniel's nested-loop problem — accordion, closed by default */}
+          <Accordion
+            type="single"
+            collapsible
+            className="mb-10 rounded-xl border border-surface-border bg-surface px-6"
+          >
+            <AccordionItem value="the-problem">
+              <AccordionTrigger>
+                <span className="flex items-center gap-3">
+                  <span className="font-sans text-sm font-semibold
+                                 text-content-primary">
+                    The Problem: Danniel&apos;s Nested-Loop Bug
+                  </span>
+                  <Badge variant="outline" className="font-mono text-xs">
+                    click to open
+                  </Badge>
+                </span>
+              </AccordionTrigger>
+              <AccordionContent>
+                <p className="font-sans text-sm text-content-secondary leading-relaxed max-w-prose">
+                  Danniel, a first-year student at Lewis College, has been staring
+                  at his screen trying to figure out why his nested loop keeps
+                  crashing and spitting out every single number instead of just the
+                  duplicates.
+                </p>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+
           {/* Meet Danniel */}
           <div className="rounded-xl border border-surface-border bg-surface p-6 sm:p-8 mb-10">
-            <p className="font-sans text-sm font-medium text-content-secondary mb-4">
-              Meet Danniel, a first-year student stuck on a nested-loop bug.
-            </p>
             <pre className="overflow-x-auto rounded-lg bg-accent-tint p-4 font-mono text-xs sm:text-sm text-content-primary leading-relaxed">
               {nestedLoopBugCode}
             </pre>

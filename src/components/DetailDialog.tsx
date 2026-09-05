@@ -9,7 +9,7 @@ import {
 
 export interface DetailSection {
   heading: string;
-  body: string;
+  body: ReactNode;
 }
 
 interface DetailDialogProps {

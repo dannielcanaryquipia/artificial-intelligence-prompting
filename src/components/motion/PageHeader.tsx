@@ -11,6 +11,8 @@ interface PageHeaderProps {
   children?: ReactNode;
   slot?: ReactNode;
   fillViewport?: boolean;
+  onTitleClick?: () => void;
+  highlightWords?: string[];
 }
 
 export function PageHeader({
@@ -22,6 +24,8 @@ export function PageHeader({
   children,
   slot,
   fillViewport = false,
+  onTitleClick,
+  highlightWords,
 }: PageHeaderProps) {
   const viewportClass = fillViewport
     ? "md:min-h-[calc(100dvh-4rem)] md:flex md:flex-col md:justify-center"
@@ -31,10 +35,15 @@ export function PageHeader({
   const content = (
     <>
       {isStringTitle ? (
-        <AnimatedTitle text={title as string} className={h1Class} />
+        <AnimatedTitle
+          text={title as string}
+          className={h1Class}
+          onClick={onTitleClick}
+          highlightWords={highlightWords}
+        />
       ) : (
         <FadeIn>
-          <h1 className={h1Class}>{title}</h1>
+          <h1 className={h1Class} onClick={onTitleClick}>{title}</h1>
         </FadeIn>
       )}
       {subtitle && (

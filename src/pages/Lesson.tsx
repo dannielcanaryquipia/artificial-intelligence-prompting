@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { PageHeader } from "@/components/motion/PageHeader";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -8,6 +9,7 @@ import {
 } from "@/components/ui/accordion";
 import { FrameworkTimeline } from "@/components/FrameworkTimeline";
 import { PromptComparison } from "@/components/PromptComparison";
+import { GlossaryTerm } from "@/components/GlossaryTerm";
 import { lessonExamples, nestedLoopExample, nestedLoopBugCode } from "@/data/promptExamples";
 
 const lessonPlan = [
@@ -40,6 +42,8 @@ const lessonPlan = [
 ];
 
 export function Lesson() {
+  const [frameworkOpen, setFrameworkOpen] = useState(false);
+
   return (
     <div>
       {/* Header */}
@@ -47,6 +51,27 @@ export function Lesson() {
         fillViewport
         title="The Prompting Framework"
         subtitle="A structured approach to writing prompts that actually work. Four elements, any situation."
+        onTitleClick={() => setFrameworkOpen(true)}
+      />
+
+      {/* "Prompting" + "Framework" glossary popup, opened by clicking the header */}
+      <GlossaryTerm
+        term="The Prompting Framework"
+        open={frameworkOpen}
+        onOpenChange={setFrameworkOpen}
+        hideTrigger
+        definitions={[
+          {
+            term: "Prompting",
+            definition:
+              "Prompting is the skill of writing that instruction clearly and specifically enough that the AI understands what you actually want. Think of it like giving directions to someone: vague directions get you lost, specific directions get you where you meant to go.",
+          },
+          {
+            term: "Framework",
+            definition:
+              "A framework is a reusable structure or set of steps you follow to solve a type of problem consistently, instead of starting from scratch or guessing each time. In your lesson, the CTFC framework (Context, Task, Format, Constraints) is a framework for building a good prompt — it gives you four things to check off before you hit send, no matter what you're asking about.",
+          },
+        ]}
       />
 
       {/* Framework */}
