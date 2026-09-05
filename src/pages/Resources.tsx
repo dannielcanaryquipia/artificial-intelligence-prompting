@@ -1,32 +1,18 @@
-import { motion, useReducedMotion } from "motion/react";
+import { PageHeader } from "@/components/motion/PageHeader";
+import { RevealSection } from "@/components/motion/RevealSection";
 import { ArrowSquareOut } from "@phosphor-icons/react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { learningResources, uiLibraries } from "@/data/references";
 
 export function Resources() {
-  const reduceMotion = useReducedMotion();
-
   return (
     <div>
       {/* Header */}
-      <section className="py-16 md:py-24 px-4 sm:px-6">
-        <div className="max-w-4xl mx-auto">
-          <motion.h1
-            initial={reduceMotion ? false : { opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="font-sans text-3xl md:text-4xl font-bold tracking-tight
-                       text-content-primary mb-4"
-          >
-            Resources
-          </motion.h1>
-          <p className="font-sans text-lg text-content-secondary max-w-prose">
-            Further reading on AI prompting, and an honest look at how this site
-            was built.
-          </p>
-        </div>
-      </section>
+      <PageHeader
+        title="Resources"
+        subtitle="Further reading on AI prompting, and an honest look at how this site was built."
+      />
 
       {/* Learning Resources */}
       <section className="pb-16 px-4 sm:px-6">
@@ -83,7 +69,7 @@ export function Resources() {
       </section>
 
       {/* How This Site Was Built */}
-      <section className="pb-16 md:pb-24 px-4 sm:px-6
+      <RevealSection className="pb-16 md:pb-24 px-4 sm:px-6
                           bg-surface-raised">
         <div className="max-w-4xl mx-auto">
           <h2 className="font-sans text-xl md:text-2xl font-semibold
@@ -145,7 +131,7 @@ export function Resources() {
             </CardContent>
           </Card>
         </div>
-      </section>
+      </RevealSection>
     </div>
   );
 }

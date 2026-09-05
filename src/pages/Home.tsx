@@ -1,4 +1,5 @@
-import { motion, useReducedMotion } from "motion/react";
+import { PageHeader } from "@/components/motion/PageHeader";
+import { RevealSection } from "@/components/motion/RevealSection";
 import { Lightbulb, Target, Wrench } from "@phosphor-icons/react";
 import { Card, CardContent } from "@/components/ui/card";
 import { PromptComparison } from "@/components/PromptComparison";
@@ -26,36 +27,20 @@ const objectives = [
 ];
 
 export function Home() {
-  const reduceMotion = useReducedMotion();
-
   return (
     <div>
       {/* Hero */}
-      <section className="py-16 md:py-24 px-4 sm:px-6">
-        <div className="max-w-4xl mx-auto">
-          <motion.h1
-            initial={reduceMotion ? false : { opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="font-sans text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight
-                       text-content-primary mb-6"
-          >
+      <PageHeader
+        title={
+          <>
             A prompt is an instruction.
             <br />
             Treat it like one.
-          </motion.h1>
-
-          <motion.p
-            initial={reduceMotion ? false : { opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="font-sans text-lg text-content-secondary max-w-prose"
-          >
-            A short lesson on prompting as a real, learnable skill for IT
-            work — not a trick, a technique.
-          </motion.p>
-        </div>
-      </section>
+          </>
+        }
+        subtitle="A short lesson on prompting as a real, learnable skill for IT work — not a trick, a technique."
+        titleClassName="mb-6"
+      />
 
       {/* Before/After Demo */}
       <section className="py-16 px-4 sm:px-6
@@ -75,7 +60,7 @@ export function Home() {
       </section>
 
       {/* Objectives */}
-      <section className="py-16 md:py-24 px-4 sm:px-6">
+      <RevealSection className="py-16 md:py-24 px-4 sm:px-6">
         <div className="max-w-4xl mx-auto">
           <h2 className="font-sans text-xl md:text-2xl font-semibold
                          text-content-primary mb-8">
@@ -111,7 +96,7 @@ export function Home() {
             })}
           </div>
         </div>
-      </section>
+      </RevealSection>
     </div>
   );
 }
