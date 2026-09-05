@@ -48,9 +48,9 @@ export function Home() {
               href={projectGithubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-lg bg-accent px-5 py-2.5 text-sm font-medium
-                         text-white hover:bg-accent-hover active:bg-accent-active
-                         transition-colors duration-150"
+              className="inline-flex items-center gap-2 rounded-lg bg-accent-deep px-5 py-2.5 text-sm font-medium
+                         text-white hover:brightness-95 active:brightness-90
+                         transition-all duration-150"
             >
               <GithubLogo size={18} weight="bold" />
               View the project on GitHub
@@ -58,7 +58,7 @@ export function Home() {
           ) : (
             <span
               title="Add the project GitHub URL in src/data/site.ts"
-              className="inline-flex items-center gap-2 rounded-lg bg-accent/20 px-5 py-2.5 text-sm font-medium
+              className="inline-flex items-center gap-2 rounded-lg border border-accent/30 bg-accent-tint px-5 py-2.5 text-sm font-medium
                          text-accent-deep cursor-not-allowed"
             >
               <GithubLogo size={18} weight="bold" />
