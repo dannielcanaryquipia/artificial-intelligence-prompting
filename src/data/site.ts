@@ -30,5 +30,7 @@ export const socialLinks: SocialLink[] = [
 
 export const projectGithubUrl = "https://github.com/dannielcanaryquipia/artificial-intelligence-prompting";
 
-export const qrImageUrl = "";
+import qrCodeImage from "@/assets/qr-code/qrforever-url-1788595950456.png";
+
+export const qrImageUrl = qrCodeImage;
 export const qrCaption = "Scan to open the lesson";
