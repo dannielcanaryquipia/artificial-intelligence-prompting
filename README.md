@@ -1,32 +1,32 @@
-# React + TypeScript + Vite
+# Prompting 101
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A short, teachable lesson on prompting as a real, learnable skill for IT work — not a trick, a technique. Built for a demo teaching session at The Lewis College.
 
-Currently, two official plugins are available:
+## Pages
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+| Route | Content |
+|---|---|
+| `/` | Hero + before/after prompt comparison + learning objectives |
+| `/lesson` | The 4-step framework (Context–Task–Format–Constraints), IT examples, lesson plan |
+| `/case-studies` | Real projects built using structured prompting |
+| `/activity` | Interactive: find what's missing in a weak prompt |
+| `/about` | Instructor background + certifications |
+| `/resources` | Verified learning resources + how this site was built |
 
-## React Compiler
+## Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+React 19 · Vite 8 · TypeScript · Tailwind CSS v4 · shadcn/ui · Motion (motion/react) · React Router v7 · Phosphor Icons · Playwright (QA)
 
-## Expanding the Oxlint configuration
+## Development
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+npm install
+npm run dev       # http://localhost:5173 (QA script expects port 5174: npx vite --port 5174)
+npm run lint      # oxlint
+npm run build     # tsc -b && vite build
+python test-site.py  # Playwright tour of all pages -> test-screenshots/ (expects dev server on 5174)
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Tooling
+
+This project integrates an OpenCode 5-agent dev team (`.opencode/TEAM-GUIDE.md`) and a project knowledge graph (`graphify-out/`) for graph-first codebase lookup. See `AGENTS.md` for the operating rules — this site is itself built with the AI-assisted development it teaches.
