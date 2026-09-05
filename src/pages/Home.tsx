@@ -3,6 +3,13 @@ import { PageHeader } from "@/components/motion/PageHeader";
 import { RevealSection } from "@/components/motion/RevealSection";
 import { Lightbulb, Target, Wrench, GithubLogo, ArrowRight } from "@phosphor-icons/react";
 import { Card, CardContent } from "@/components/ui/card";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { Badge } from "@/components/ui/badge";
 import { PromptComparison } from "@/components/PromptComparison";
 import { QrCard } from "@/components/QrCard";
 import { DetailDialog } from "@/components/DetailDialog";
@@ -131,51 +138,88 @@ export function Home() {
               <PromptComparison example={homepageExample} />
             </div>
 
-            {/* Wrap-up: the bug explained */}
-            <div className="mt-8 rounded-xl border border-accent/20 bg-accent-tint/40 p-6 sm:p-8">
-              <h3 className="font-sans text-lg font-semibold
-                             text-content-primary mb-2">
-                What Danniel actually needed to understand
-              </h3>
-              <p className="font-sans text-sm text-content-secondary leading-relaxed mb-4">
-                The weak prompt sidestepped the bug — it handed back a full
-                rewrite that ignores the nested-loop version he&apos;s learning.
-                The improved prompt named exactly what was wrong:
-              </p>
-              <ul className="space-y-3 font-sans text-sm text-content-primary leading-relaxed">
-                <li className="flex items-start gap-3">
-                  <span className="font-mono text-accent-deep font-semibold shrink-0 mt-0.5">
-                    Bug 1
+            {/* Wrap-up: the bug explained — toggled open/closed */}
+            <Accordion
+              type="single"
+              collapsible
+              className="mt-8 rounded-xl border border-surface-border bg-surface px-6"
+            >
+              <AccordionItem value="what-danniel-needed">
+                <AccordionTrigger>
+                  <span className="flex items-center gap-3">
+                    <span className="font-sans text-sm font-semibold
+                                   text-content-primary">
+                      What Danniel actually needed to understand
+                    </span>
+                    <Badge variant="outline" className="font-mono text-xs">
+                      click to open
+                    </Badge>
                   </span>
-                  <span>
-                    Off-by-one bounds —{" "}
-                    <code className="font-mono">i &lt;= arr.length</code> and{" "}
-                    <code className="font-mono">j &lt;= arr.length</code> should
-                    use <code className="font-mono">&lt;</code>. Arrays are
-                    zero-indexed, so the last valid index is{" "}
-                    <code className="font-mono">arr.length - 1</code>. The final
-                    pass reads <code className="font-mono">arr[arr.length]</code>,
-                    which is <code className="font-mono">undefined</code> — that&apos;s
-                    the crash.
-                  </span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="font-mono text-accent-deep font-semibold shrink-0 mt-0.5">
-                    Bug 2
-                  </span>
-                  <span>
-                    Missing <code className="font-mono">i !== j</code> check — with
-                    no guard, every element matches <em>itself</em>, so every
-                    element gets pushed even when it only appears once. That&apos;s
-                    why it returned every number instead of just the repeats.
-                  </span>
-                </li>
-              </ul>
-              <p className="font-sans text-sm text-accent-deep font-medium mt-4">
-                The fix was two small changes to the loops — not a rewritten
-                function. That&apos;s the difference a structured prompt makes.
-              </p>
-            </div>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <p className="font-sans text-sm text-content-secondary leading-relaxed mb-4">
+                    The weak prompt sidestepped the bug — it handed back a
+                    full rewrite that ignores the nested-loop version
+                    he&apos;s learning. The improved prompt named exactly what
+                    was wrong:
+                  </p>
+                  <div className="space-y-3">
+                    <div className="flex items-start gap-4 rounded-lg border border-surface-border p-4">
+                      <Badge
+                        className="bg-accent-deep hover:bg-accent-deep text-white shrink-0 h-8 w-8 rounded-full flex items-center justify-center font-mono text-sm"
+                      >
+                        1
+                      </Badge>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-sans text-sm font-semibold
+                                       text-content-primary mb-1">
+                          Off-by-one bounds
+                        </h4>
+                        <p className="font-sans text-sm text-content-secondary">
+                          <code className="font-mono">i &lt;= arr.length</code>{" "}
+                          and{" "}
+                          <code className="font-mono">j &lt;= arr.length</code>{" "}
+                          should use{" "}
+                          <code className="font-mono">&lt;</code>. Arrays are
+                          zero-indexed, so the last valid index is{" "}
+                          <code className="font-mono">arr.length - 1</code>.
+                          The final pass reads{" "}
+                          <code className="font-mono">arr[arr.length]</code>,
+                          which is{" "}
+                          <code className="font-mono">undefined</code> — that&apos;s
+                          the crash.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-4 rounded-lg border border-surface-border p-4">
+                      <Badge
+                        className="bg-accent-deep hover:bg-accent-deep text-white shrink-0 h-8 w-8 rounded-full flex items-center justify-center font-mono text-sm"
+                      >
+                        2
+                      </Badge>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-sans text-sm font-semibold
+                                       text-content-primary mb-1">
+                          Missing{" "}
+                          <code className="font-mono">i !== j</code> check
+                        </h4>
+                        <p className="font-sans text-sm text-content-secondary">
+                          With no guard, every element matches{" "}
+                          <em>itself</em>, so every element gets pushed even
+                          when it only appears once. That&apos;s why it
+                          returned every number instead of just the repeats.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <p className="font-sans text-sm text-accent-deep font-medium mt-4">
+                    The fix was two small changes to the loops — not a
+                    rewritten function. That&apos;s the difference a structured
+                    prompt makes.
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
 
             <p className="font-sans text-center text-accent-deep text-sm font-medium mt-8">
               <Link to="/lesson" className="hover:underline">

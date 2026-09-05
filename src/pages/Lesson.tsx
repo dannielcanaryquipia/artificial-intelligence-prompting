@@ -100,25 +100,82 @@ export function Lesson() {
 
               <PromptComparison example={nestedLoopExample} />
 
-              <div className="rounded-lg bg-surface-raised border border-surface-border p-6 mt-8">
-                <h4 className="font-sans text-sm font-semibold text-content-primary">
-                  What each prompt actually got Danniel
-                </h4>
-                <ul className="mt-3 space-y-2 font-sans text-sm text-content-secondary list-disc list-inside">
-                  <li>
-                    The weak prompt got a full rewrite using{" "}
-                    <code className="font-mono">Set</code> — technically
-                    works, but ignores the loop version he&apos;s learning
-                    this week and never explains what was actually wrong.
-                  </li>
-                  <li>
-                    The CTFC prompt got both real bugs: an off-by-one loop
-                    bound and a missing{" "}
-                    <code className="font-mono">i !== j</code> check — and a
-                    fix limited to the broken lines.
-                  </li>
-                </ul>
-              </div>
+              <Accordion
+                type="single"
+                collapsible
+                className="mt-8 rounded-xl border border-surface-border bg-surface px-6"
+              >
+                <AccordionItem value="what-danniel-needed">
+                  <AccordionTrigger>
+                    <span className="flex items-center gap-3">
+                      <span className="font-sans text-sm font-semibold
+                                     text-content-primary">
+                        What Danniel actually needed to understand
+                      </span>
+                      <Badge variant="outline" className="font-mono text-xs">
+                        click to open
+                      </Badge>
+                    </span>
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <p className="font-sans text-sm text-content-secondary mb-4">
+                      The weak prompt sidestepped the bug — it handed back a
+                      full rewrite that ignores the nested-loop version
+                      he&apos;s learning. The improved prompt named exactly
+                      what was wrong:
+                    </p>
+                    <div className="space-y-3">
+                      <div className="flex items-start gap-4 rounded-lg border border-surface-border p-4">
+                        <Badge
+                          className="bg-accent-deep hover:bg-accent-deep text-white shrink-0 h-8 w-8 rounded-full flex items-center justify-center font-mono text-sm"
+                        >
+                          1
+                        </Badge>
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-sans text-sm font-semibold
+                                         text-content-primary mb-1">
+                            Off-by-one bounds
+                          </h4>
+                          <p className="font-sans text-sm text-content-secondary">
+                            <code className="font-mono">i &lt;= arr.length</code>{" "}
+                            and{" "}
+                            <code className="font-mono">j &lt;= arr.length</code>{" "}
+                            should use{" "}
+                            <code className="font-mono">&lt;</code>. Arrays
+                            are zero-indexed, so the last valid index is{" "}
+                            <code className="font-mono">arr.length - 1</code>.
+                            The final pass reads{" "}
+                            <code className="font-mono">arr[arr.length]</code>,
+                            which is{" "}
+                            <code className="font-mono">undefined</code> —
+                            that&apos;s the crash.
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-4 rounded-lg border border-surface-border p-4">
+                        <Badge
+                          className="bg-accent-deep hover:bg-accent-deep text-white shrink-0 h-8 w-8 rounded-full flex items-center justify-center font-mono text-sm"
+                        >
+                          2
+                        </Badge>
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-sans text-sm font-semibold
+                                         text-content-primary mb-1">
+                            Missing{" "}
+                            <code className="font-mono">i !== j</code> check
+                          </h4>
+                          <p className="font-sans text-sm text-content-secondary">
+                            With no guard, every element matches itself, so
+                            every element gets pushed even when a value only
+                            appears once. That&apos;s why it returns every
+                            number instead of just the repeats.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
             </div>
 
             {lessonExamples.map((example) => (

@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { List } from "@phosphor-icons/react";
 import { navLinks } from "@/data/navigation";
+import { Logo } from "@/components/Logo";
 
 interface NavbarProps {
   onMenuClick: () => void;
@@ -16,10 +17,11 @@ export function Navbar({ onMenuClick }: NavbarProps) {
         {/* Brand */}
         <NavLink
           to="/"
-          className="font-mono font-semibold text-lg
+          className="flex items-center gap-2.5 font-mono font-semibold text-lg
                      text-content-primary
                      hover:text-accent transition-colors duration-150 shrink-0"
         >
+          <Logo className="h-7 w-7" />
           Prompting 101
         </NavLink>
 

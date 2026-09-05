@@ -91,7 +91,7 @@
   @keyframes dialog-content {
     from {
       opacity: 0;
-      transform: translate(-50%, -48%) scale(0.96);
+      transform: translate(-50%, -50%) scale(0.9);
     }
     to {
       opacity: 1;

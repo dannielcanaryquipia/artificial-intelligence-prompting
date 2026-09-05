@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
 import { MobileNav } from "./MobileNav";
+import { ScrollTop } from "@/components/ScrollTop";
 
 interface NavContextType {
   openMobileNav: () => void;
@@ -22,6 +23,7 @@ export function Layout() {
   return (
     <NavContext.Provider value={{ openMobileNav: () => setIsMobileOpen(true) }}>
       <div className="min-h-screen flex flex-col">
+        <ScrollTop />
         <Navbar onMenuClick={() => setIsMobileOpen(true)} />
         <main className="flex-1">
           <Outlet />
