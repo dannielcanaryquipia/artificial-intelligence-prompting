@@ -1,16 +1,17 @@
 import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
-import { X, House, BookOpen, FolderOpen, Lightbulb, User, Books } from "@phosphor-icons/react";
+import { X, House, BookOpen, FolderOpen, Lightbulb, User, Books, type Icon } from "@phosphor-icons/react";
+import { navLinks } from "@/data/navigation";
 
-const navLinks = [
-  { to: "/", label: "Home", icon: House },
-  { to: "/lesson", label: "Lesson", icon: BookOpen },
-  { to: "/case-studies", label: "Case Studies", icon: FolderOpen },
-  { to: "/activity", label: "Try It", icon: Lightbulb },
-  { to: "/about", label: "About", icon: User },
-  { to: "/resources", label: "Resources", icon: Books },
-];
+const mobileNavIcons: Record<string, Icon> = {
+  "/": House,
+  "/lesson": BookOpen,
+  "/case-studies": FolderOpen,
+  "/activity": Lightbulb,
+  "/about": User,
+  "/resources": Books,
+};
 
 interface MobileNavProps {
   isOpen: boolean;
@@ -116,7 +117,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
             <nav className="flex-1 flex flex-col px-3 py-4 overflow-y-auto">
               <ul className="flex flex-col gap-1">
                 {navLinks.map((link, i) => {
-                  const Icon = link.icon;
+                  const Icon = mobileNavIcons[link.to];
                   return (
                     <motion.li
                       key={link.to}

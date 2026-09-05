@@ -1,14 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { List } from "@phosphor-icons/react";
-
-const navLinks = [
-  { to: "/", label: "Home" },
-  { to: "/lesson", label: "Lesson" },
-  { to: "/case-studies", label: "Case Studies" },
-  { to: "/activity", label: "Try It" },
-  { to: "/about", label: "About" },
-  { to: "/resources", label: "Resources" },
-];
+import { navLinks } from "@/data/navigation";
 
 interface NavbarProps {
   onMenuClick: () => void;

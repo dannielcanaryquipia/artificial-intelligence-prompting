@@ -1,11 +1,5 @@
 import { NavLink } from "react-router-dom";
-
-const footerLinks = [
-  { to: "/", label: "Home" },
-  { to: "/lesson", label: "Lesson" },
-  { to: "/case-studies", label: "Case Studies" },
-  { to: "/about", label: "About" },
-];
+import { footerLinks } from "@/data/navigation";
 
 export function Footer() {
   return (
