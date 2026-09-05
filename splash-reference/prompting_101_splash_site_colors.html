@@ -1,0 +1,53 @@
+<h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;">Preview of splash animation matching the Prompting 101 website colors, cream background with dark charcoal text and orange letter flash</h2>
+<div style="background:#FAFAF8;border-radius:12px;padding:48px 24px;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:220px;position:relative;border:0.5px solid rgba(0,0,0,0.08);">
+  <div id="line1" style="font-family:'Poppins',var(--font-sans),sans-serif;font-weight:700;font-size:34px;letter-spacing:0.5px;color:#1A1A1A;display:flex;"></div>
+  <div id="line2" style="font-family:'Poppins',var(--font-sans),sans-serif;font-weight:700;font-size:22px;letter-spacing:1px;color:#1A1A1A;display:flex;margin-top:8px;"></div>
+  <button id="replay" style="margin-top:28px;background:transparent;color:#1A1A1A;border:0.5px solid rgba(0,0,0,0.25);border-radius:var(--radius);padding:6px 14px;font-size:13px;cursor:pointer;">Replay</button>
+</div>
+<script src="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap"></script>
+<script>
+const w1 = "Prompting";
+const w2 = "101";
+const l1 = document.getElementById('line1');
+const l2 = document.getElementById('line2');
+const btn = document.getElementById('replay');
+
+function makeSpan(ch){
+  const s = document.createElement('span');
+  s.textContent = ch;
+  s.style.opacity = '0';
+  s.style.transform = 'scale(1.4)';
+  s.style.color = '#D2691E';
+  s.style.transition = 'opacity 160ms ease, transform 160ms ease, color 260ms ease';
+  return s;
+}
+
+function reveal(container, text, delayStart, cb){
+  container.innerHTML = '';
+  const spans = [];
+  for (const ch of text){
+    const s = makeSpan(ch);
+    container.appendChild(s);
+    spans.push(s);
+  }
+  spans.forEach((s, i) => {
+    setTimeout(() => {
+      s.style.opacity = '1';
+      s.style.transform = 'scale(1)';
+      setTimeout(() => { s.style.color = '#1A1A1A'; }, 200);
+    }, delayStart + i * 220);
+  });
+  const total = delayStart + spans.length * 220 + 300;
+  if (cb) setTimeout(cb, total);
+}
+
+function play(){
+  btn.disabled = true;
+  reveal(l1, w1, 0, () => {
+    reveal(l2, w2, 200, () => { btn.disabled = false; });
+  });
+}
+
+btn.addEventListener('click', play);
+play();
+</script>

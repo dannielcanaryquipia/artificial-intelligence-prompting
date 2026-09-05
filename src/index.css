@@ -52,6 +52,52 @@
   /* Max widths */
   --max-w-prose: 65ch;
   --max-w-reading: 72ch;
+
+  /* Accordion open/close */
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+
+  /* Dialog open */
+  --animate-dialog-overlay: dialog-overlay 0.2s ease-out;
+  --animate-dialog-content: dialog-content 0.25s ease-out;
+
+  @keyframes dialog-overlay {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes dialog-content {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -48%) scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
 }
 
 /* Base styles */
@@ -68,6 +114,15 @@ body {
 *:focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
+}
+
+/* JetBrains Mono ligatures fold === into one long bar — disable them so
+   strict-equality stays readable as three separate equals in code blocks */
+code,
+pre,
+.font-mono {
+  font-feature-settings: "liga" 0, "calt" 0;
+  font-variant-ligatures: none;
 }
 
 /* Scroll behavior */

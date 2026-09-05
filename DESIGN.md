@@ -1,6 +1,6 @@
 # Design System — Prompting 101
 
-> Quick reference for consistent design decisions. Full spec lives in `../DESIGN_DIRECTION.md`.
+> Quick reference for consistent design decisions. Full spec lives in [`ai-prompting-md/DESIGN_DIRECTION.md`](ai-prompting-md/DESIGN_DIRECTION.md).
 
 ---
 
@@ -17,6 +17,7 @@
 | `accent-hover` | `#FBBF24` | `hover:bg-accent-hover` | Hover state |
 | `accent-active` | `#D97706` | `bg-accent-active` | Pressed state |
 | `accent-tint` | `#FFFBEB` | `bg-accent-tint` | Tinted highlight backgrounds |
+| `accent-deep` | `#B45309` | `text-accent-deep` | Small accent text on tint (labels, chip titles) |
 | `content-primary` | `#292524` | `text-content-primary` | Body text (stone-800, not pure black) |
 | `content-secondary` | `#78716C` | `text-content-secondary` | Captions, labels |
 | `content-muted` | `#A8A29E` | `text-content-muted` | Disabled, placeholder |
@@ -150,17 +151,22 @@ All motion respects `useReducedMotion()` from `motion/react`.
 src/
 ├── components/
 │   ├── layout/          Layout, Navbar, MobileNav, Footer
-│   ├── ui/              shadcn primitives (card, badge, button, tabs)
+│   ├── motion/          Motion wrappers (FadeIn, AnimatedTitle, PageHeader, RevealSection)
+│   ├── ui/              shadcn primitives (card, badge, button, tabs, dialog, accordion)
+│   ├── SplashScreen.tsx Pre-entry splash (letter-by-letter title reveal)
 │   ├── PromptComparison.tsx
 │   ├── FrameworkTimeline.tsx
 │   ├── ActivityChips.tsx
+│   ├── DetailDialog.tsx
 │   ├── CaseStudyCard.tsx
-│   └── CredentialGroup.tsx
-├── data/                Content files (promptExamples, caseStudies, certifications, references)
+│   ├── CredentialGroup.tsx
+│   ├── WhatWeLearned.tsx
+│   └── QrCard.tsx
+├── data/                Content files (site, navigation, promptExamples, caseStudies, certifications, references)
 ├── pages/               Home, Lesson, CaseStudies, Activity, About, Resources
 ├── lib/
 │   └── utils.ts         cn() utility
-├── App.tsx              Router setup
+├── App.tsx              Router setup, <SplashScreen /> before <BrowserRouter>
 ├── main.tsx
 └── index.css            Tailwind v4 tokens
 ```

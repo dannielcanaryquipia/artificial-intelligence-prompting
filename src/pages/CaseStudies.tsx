@@ -7,6 +7,7 @@ export function CaseStudies() {
     <div>
       {/* Header */}
       <PageHeader
+        fillViewport
         title="Case Studies"
         subtitle="Real projects built using structured prompting. Each one demonstrates how clear instructions lead to real results."
       />

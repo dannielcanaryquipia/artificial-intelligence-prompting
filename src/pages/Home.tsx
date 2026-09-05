@@ -1,9 +1,12 @@
+import { Link } from "react-router-dom";
 import { PageHeader } from "@/components/motion/PageHeader";
 import { RevealSection } from "@/components/motion/RevealSection";
-import { Lightbulb, Target, Wrench, GithubLogo } from "@phosphor-icons/react";
+import { Lightbulb, Target, Wrench, GithubLogo, ArrowRight } from "@phosphor-icons/react";
 import { Card, CardContent } from "@/components/ui/card";
 import { PromptComparison } from "@/components/PromptComparison";
-import { homepageExample } from "@/data/promptExamples";
+import { QrCard } from "@/components/QrCard";
+import { DetailDialog } from "@/components/DetailDialog";
+import { homepageExample, nestedLoopBugCode } from "@/data/promptExamples";
 import { projectGithubUrl } from "@/data/site";
 
 const objectives = [
@@ -12,18 +15,51 @@ const objectives = [
     title: "Understand",
     description:
       "What a prompt actually is and why quality changes output quality",
+    dialogDescription: "New to prompting? Start here.",
+    sections: [
+      {
+        heading: "What is a prompt?",
+        body: "A prompt is the instruction you give to an AI — a request, a question, or a task expressed in plain language. The model reads it and responds based on what you said, so the sharper the instruction, the closer the answer comes to what you actually want.",
+      },
+      {
+        heading: "Does prompt quality change output quality?",
+        body: "Yes. An AI can only work with what you give it. A vague prompt like \"fix my code\" produces a guess; a specific prompt that names the goal, the context, and the constraints produces an answer aimed at your real problem. Good instructions lead to good output.",
+      },
+    ],
   },
   {
     icon: Target,
     title: "Apply",
     description:
       "A simple framework — Context, Task, Format, Constraints — to any prompt",
+    dialogDescription: "The four pieces behind every strong prompt.",
+    sections: [
+      {
+        heading: "The four pieces",
+        body: "Context seats the situation and the background. Task states exactly what you want done. Format defines the shape of the answer — a list, code only, a paragraph. Constraints set the limits: what to avoid, what to keep, what is out of scope.",
+      },
+      {
+        heading: "Why it works",
+        body: "Answer these four questions before you send anything, and you have covered the information the model needs to respond precisely. You also catch whatever is missing while it is still cheap to add.",
+      },
+    ],
   },
   {
     icon: Wrench,
     title: "Recognize",
     description:
       "How prompting shows up in everyday IT work: debugging, documentation, learning new tools",
+    dialogDescription: "Where structured prompting pays off on the job.",
+    sections: [
+      {
+        heading: "At work",
+        body: "Most IT writing is not decorative prose — it is debugging requests, documentation questions, and \"how do I learn this tool\" prompts. Structured prompting turns those from hopeful questions into instructions that return usable answers.",
+      },
+      {
+        heading: "The habit",
+        body: "Context, Task, Format, Constraints does not slow you down. With practice it becomes the way you naturally phrase any request — and it works for people as well as it works for AI.",
+      },
+    ],
   },
 ];
 
@@ -32,15 +68,11 @@ export function Home() {
     <div>
       {/* Hero */}
       <PageHeader
-        title={
-          <>
-            A prompt is an instruction.
-            <br />
-            Treat it like one.
-          </>
-        }
+        fillViewport
+        title="A prompt is an instruction. Treat it like one."
         subtitle="A short lesson on prompting as a real, learnable skill for IT work — not a trick, a technique."
         titleClassName="mb-6"
+        slot={<QrCard />}
       >
         <div className="mt-8">
           {projectGithubUrl ? (
@@ -81,7 +113,76 @@ export function Home() {
             what you get out.
           </p>
 
-          <PromptComparison example={homepageExample} />
+          {/* Meet Danniel */}
+          <div className="rounded-xl border border-surface-border bg-surface p-6 sm:p-8 mb-10">
+            <p className="font-sans text-sm font-medium text-content-secondary mb-4">
+              Meet Danniel, a first-year student stuck on a nested-loop bug.
+            </p>
+            <pre className="overflow-x-auto rounded-lg bg-accent-tint p-4 font-mono text-xs sm:text-sm text-content-primary leading-relaxed">
+              {nestedLoopBugCode}
+            </pre>
+            <p className="font-sans text-xs text-content-muted mt-2">
+              Meant to return only repeated numbers. Instead it returns every
+              number, and sometimes crashes with{" "}
+              <code className="font-mono">undefined</code>.
+            </p>
+
+            <div className="mt-8">
+              <PromptComparison example={homepageExample} />
+            </div>
+
+            {/* Wrap-up: the bug explained */}
+            <div className="mt-8 rounded-xl border border-accent/20 bg-accent-tint/40 p-6 sm:p-8">
+              <h3 className="font-sans text-lg font-semibold
+                             text-content-primary mb-2">
+                What Danniel actually needed to understand
+              </h3>
+              <p className="font-sans text-sm text-content-secondary leading-relaxed mb-4">
+                The weak prompt sidestepped the bug — it handed back a full
+                rewrite that ignores the nested-loop version he&apos;s learning.
+                The improved prompt named exactly what was wrong:
+              </p>
+              <ul className="space-y-3 font-sans text-sm text-content-primary leading-relaxed">
+                <li className="flex items-start gap-3">
+                  <span className="font-mono text-accent-deep font-semibold shrink-0 mt-0.5">
+                    Bug 1
+                  </span>
+                  <span>
+                    Off-by-one bounds —{" "}
+                    <code className="font-mono">i &lt;= arr.length</code> and{" "}
+                    <code className="font-mono">j &lt;= arr.length</code> should
+                    use <code className="font-mono">&lt;</code>. Arrays are
+                    zero-indexed, so the last valid index is{" "}
+                    <code className="font-mono">arr.length - 1</code>. The final
+                    pass reads <code className="font-mono">arr[arr.length]</code>,
+                    which is <code className="font-mono">undefined</code> — that&apos;s
+                    the crash.
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="font-mono text-accent-deep font-semibold shrink-0 mt-0.5">
+                    Bug 2
+                  </span>
+                  <span>
+                    Missing <code className="font-mono">i !== j</code> check — with
+                    no guard, every element matches <em>itself</em>, so every
+                    element gets pushed even when it only appears once. That&apos;s
+                    why it returned every number instead of just the repeats.
+                  </span>
+                </li>
+              </ul>
+              <p className="font-sans text-sm text-accent-deep font-medium mt-4">
+                The fix was two small changes to the loops — not a rewritten
+                function. That&apos;s the difference a structured prompt makes.
+              </p>
+            </div>
+
+            <p className="font-sans text-center text-accent-deep text-sm font-medium mt-8">
+              <Link to="/lesson" className="hover:underline">
+                See the full breakdown on the Lesson page →
+              </Link>
+            </p>
+          </div>
         </div>
       </section>
 
@@ -97,27 +198,38 @@ export function Home() {
             {objectives.map((obj) => {
               const Icon = obj.icon;
               return (
-                <Card
+                <DetailDialog
                   key={obj.title}
-                  className="bg-surface
-                             border-surface-border
-                             hover:shadow-md transition-shadow duration-200"
+                  title={obj.title}
+                  description={obj.dialogDescription}
+                  sections={obj.sections}
                 >
-                  <CardContent className="pt-6">
-                    <Icon
-                      size={28}
-                      weight="duotone"
-                      className="text-accent mb-3"
-                    />
-                    <h3 className="font-sans text-lg font-semibold
-                                   text-content-primary mb-2">
-                      {obj.title}
-                    </h3>
-                    <p className="font-sans text-sm text-content-secondary leading-relaxed">
-                      {obj.description}
-                    </p>
-                  </CardContent>
-                </Card>
+                  <button
+                    type="button"
+                    className="group w-full text-left cursor-pointer"
+                  >
+                    <Card className="h-full bg-surface border-surface-border hover:-translate-y-0.5 hover:shadow-md transition-all duration-200">
+                      <CardContent className="pt-6">
+                        <Icon
+                          size={28}
+                          weight="duotone"
+                          className="text-accent mb-3"
+                        />
+                        <h3 className="font-sans text-lg font-semibold
+                                       text-content-primary mb-2">
+                          {obj.title}
+                        </h3>
+                        <p className="font-sans text-sm text-content-secondary leading-relaxed mb-3">
+                          {obj.description}
+                        </p>
+                        <span className="inline-flex items-center gap-1 text-xs font-medium text-accent group-hover:underline">
+                          Learn more
+                          <ArrowRight size={14} weight="bold" aria-hidden="true" />
+                        </span>
+                      </CardContent>
+                    </Card>
+                  </button>
+                </DetailDialog>
               );
             })}
           </div>

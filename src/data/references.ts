@@ -20,6 +20,13 @@ export const learningResources: LearningResource[] = [
     free: true,
   },
   {
+    title: "Cisco Networking Academy — Apply AI",
+    description:
+      "Cisco's free 'Apply AI — Prompt Like an Engineer' course. Learn to prompt like an engineer with hands-on lessons in AI problem-solving.",
+    link: "https://www.netacad.com/courses/apply-ai-prompt-like-engineer",
+    free: true,
+  },
+  {
     title: "W3Schools",
     description:
       "Free, hands-on tutorials for the fundamentals — HTML, CSS, JavaScript, SQL, and more. Learn the baseline before relying on AI.",
@@ -50,7 +57,7 @@ export const buildStack: BuildStack[] = [
   {
     name: "shadcn/ui",
     description:
-      "The component system this site is built on — accessible, copy-paste primitives (Card, Button, Badge, Tabs).",
+      "The component system this site is built on — accessible, copy-paste primitives (Card, Button, Badge, Tabs, Dialog, Accordion).",
     link: "https://ui.shadcn.com",
   },
   {
@@ -58,6 +65,30 @@ export const buildStack: BuildStack[] = [
     description:
       "The accessible, unstyled primitives that shadcn/ui wraps — used directly here too (Slot, Tabs).",
     link: "https://www.radix-ui.com",
+  },
+  {
+    name: "Motion",
+    description:
+      "The animation library behind every deliberate motion moment — splash title, page headers, scroll reveals, the framework timeline, and the activity chips.",
+    link: "https://motion.dev",
+  },
+  {
+    name: "React Router",
+    description:
+      "Client-side routing — a persistent layout wraps all six routes in a shared nav + footer (react-router-dom v7).",
+    link: "https://reactrouter.com",
+  },
+  {
+    name: "Phosphor Icons",
+    description:
+      "The icon set for section icons, social links, framework step icons, and footer icons.",
+    link: "https://phosphoricons.com",
+  },
+  {
+    name: "Graphify",
+    description:
+      "The AST-parsed knowledge graph of this repo (graphify-out/) used for cheap, scoped codebase lookup during development.",
+    link: "https://github.com/dannielcanaryquipia/artificial-intelligence-prompting",
   },
   {
     name: "OpenCode CLI",

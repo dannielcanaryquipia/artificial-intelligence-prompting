@@ -6,43 +6,47 @@ export interface PromptExample {
   improvedOutput: string;
 }
 
-export const homepageExample: PromptExample = {
-  id: "fix-code",
-  weakPrompt: "fix my code",
+export const nestedLoopBugCode = `function findDuplicates(arr) {
+  let duplicates = [];
+  for (let i = 0; i <= arr.length; i++) {
+    for (let j = 0; j <= arr.length; j++) {
+      if (arr[i] === arr[j]) {
+        duplicates.push(arr[i]);
+      }
+    }
+  }
+  return duplicates;
+}`;
+
+export const nestedLoopExample: PromptExample = {
+  id: "nested-loop",
+  weakPrompt: "fix my code, it's not working [pastes function]",
   improvedPrompt:
-    "Here's a Python function that's throwing a `KeyError` on line 12 [paste snippet]. Explain why the error happens, then show the corrected version. Keep the fix minimal — don't restructure the rest of the function.",
+    "I'm Danniel, a first-year student learning JavaScript for-loops this week. This nested loop is supposed to return only numbers that appear more than once, but it's returning every number instead. Find the bug(s) in the loop conditions and comparison logic. List each bug with a one-line explanation, then show corrected code only for the affected lines. Don't rewrite the whole function using a different approach like `Set` — I need to understand what's wrong with the loop version specifically, since that's what we're learning this week.",
   weakOutput:
-    "There's an error in your code. You need to check your dictionary keys. Make sure the key exists before accessing it.",
+    "Sure! Try using a `Set` to track seen values instead — here's a rewritten version using that approach:\n\n```js\nfunction findDuplicates(arr) {\n  const seen = new Set();\n  const duplicates = new Set();\n  for (const n of arr) {\n    if (seen.has(n)) duplicates.add(n);\n    seen.add(n);\n  }\n  return [...duplicates];\n}\n```\n\nThat avoids the nested loop entirely.",
   improvedOutput:
-    "The `KeyError` on line 12 happens because the dictionary `user_data` doesn't contain the key `'email'` at that point in execution. This typically occurs when:\n\n1. The key was never added to the dictionary\n2. The key name has a typo\n3. The data source returned an empty/partial object\n\nHere's the corrected version with a minimal fix:\n\n```python\ndef process_user(user_data):\n    email = user_data.get('email', 'no-email@provided.com')\n    # ... rest of function unchanged\n```\n\nThe `.get()` method returns a default value instead of raising an error when the key is missing.",
+    "Two bugs in the loop conditions and comparison logic:\n\n**1. Off-by-one bounds** — `i <= arr.length` and `j <= arr.length` should be `<`. Arrays are zero-indexed, so the last valid index is `arr.length - 1`. On the final pass the loop reads `arr[arr.length]`, which is `undefined`, and pushes it into the results — that's the crash you saw.\n\n**2. Missing `i !== j` check** — with no guard, every element matches *itself*, so every element gets pushed even when a value only appears once. That's why it returns every number, not just the repeats.\n\nCorrected lines:\n\n```js\nfor (let i = 0; i < arr.length; i++) {\n  for (let j = 0; j < arr.length; j++) {\n    if (i !== j && arr[i] === arr[j]) {\n      duplicates.push(arr[i]);\n    }\n  }\n}\n```",
 };
 
+export const homepageExample: PromptExample = nestedLoopExample;
+
 export const lessonExamples: PromptExample[] = [
-  {
-    id: "sql-debug",
-    weakPrompt: "why doesn't my query work",
-    improvedPrompt:
-      "This SQL query is supposed to return customers with more than 3 orders but it's returning everyone. [paste query]. What's wrong with the HAVING clause, and how do I fix just that part?",
-    weakOutput:
-      "Check your query syntax. You might have an error in your WHERE or GROUP BY clause.",
-    improvedOutput:
-      "The issue is likely in your HAVING clause. Common mistakes:\n\n1. Using `HAVING COUNT(*) > 3` without a GROUP BY\n2. Referencing a column in HAVING that isn't in the SELECT or GROUP BY\n3. Using WHERE instead of HAVING for aggregate conditions\n\nQuick fix: Make sure your query follows this structure:\n```sql\nSELECT customer_id, COUNT(*) as order_count\nFROM orders\nGROUP BY customer_id\nHAVING COUNT(*) > 3;\n```\n\nIf you share your actual query, I can pinpoint the exact issue.",
-  },
   {
     id: "error-message",
     weakPrompt: "what does this error mean",
     improvedPrompt:
-      "I'm getting `ECONNREFUSED` when my Node app tries to connect to PostgreSQL locally. I'm using Docker. Explain the most likely cause in plain terms, then give me 2-3 things to check in order.",
+      "I'm Danniel, a first-year student working in VSCode on a React app built with Vite and React Router v7. I added a new page file `src/pages/About.tsx` because I read React Router does file-based routing, but when I open `/about` the page is blank and the console shows `No route matches location \"/about\"`. Explain why in plain terms — tell me the difference between file-based routing and the `<Routes>` I already have in `App.tsx`. Then show me the smallest change to make `/about` work; don't rewrite my whole `App.tsx`, just the line(s) that need to change.",
     weakOutput:
-      "ECONNREFUSED means the connection was refused. Check if your database server is running.",
+      "No route matches location \"/about\" means the URL you opened doesn't have a route attached to it. Check your routes and make sure one exists for /about.",
     improvedOutput:
-      "ECONNREFUSED means your Node app tried to connect to PostgreSQL but nothing was listening on that port. With Docker, the most common causes are:\n\n**1. PostgreSQL container isn't running**\n```bash\ndocker ps | grep postgres\n```\nIf nothing shows, start it: `docker start <container-name>`\n\n**2. Port mismatch**\nYour app might be connecting to port 5432, but Docker mapped it to a different host port. Check with:\n```bash\ndocker port <container-name>\n```\n\n**3. Wrong host**\nIf both run in Docker, use the container name (e.g., `postgres`) as the host, not `localhost`.",
+      "Your project uses JSX routing — a `<BrowserRouter>` wrapping `<Routes>` in `App.tsx` — not file-based routing. So creating `src/pages/About.tsx` does nothing by itself: Vite doesn't auto-register page files, and React Router only renders the `<Route>` elements you declare. That's why you get `No route matches location \"/about\"` and a blank page.\n\n**1. The smallest fix:** register the route in your existing `<Routes>`:\n\n```jsx\n<Route path=\"about\" element={<About />} />\n```\n\nand import it at the top of `App.tsx`:\n\n```jsx\nimport About from \"./pages/About\";\n```\n\n**2. What file-based routing actually is:** a separate mode (React Router v7 framework mode) where routes are derived from the `.tsx` files in a `routes/` folder through a routes module + Vite plugin — create a file and a route appears. You don't have that mode wired up; you have declarative `<Routes>`, where every page is a line you add yourself. For a learning project, the fix above is the right move.",
   },
   {
     id: "learn-tool",
     weakPrompt: "teach me react router",
     improvedPrompt:
-      "I already know React basics (components, props, useState). Explain react-router-dom v7 assuming that background — just the parts I need to build a 5-page site with a shared nav. Skip the beginner React explanation.",
+      "I'm Danniel, a first-year student who already knows React basics (components, props, useState). Explain react-router-dom v7 assuming that background — just the parts I need to build a 5-page site with a shared nav. Skip the beginner React explanation.",
     weakOutput:
       "React Router is a library for routing in React. You can install it with npm and use Route components to define pages.",
     improvedOutput:

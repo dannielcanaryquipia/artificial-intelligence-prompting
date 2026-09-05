@@ -10,6 +10,7 @@ export function Resources() {
     <div>
       {/* Header */}
       <PageHeader
+        fillViewport
         title="Resources"
         subtitle="Further reading on AI prompting, and an honest look at how this site was built."
       />

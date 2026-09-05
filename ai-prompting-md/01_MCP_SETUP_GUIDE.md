@@ -1,4 +1,4 @@
-# MCP Setup Guide — shadcn, Playwright, and VengeanceUI
+# MCP Setup Guide — shadcn, Playwright, and Graphify
 
 > **How to use this file:** Run these setup steps once, in your project folder, before asking your coding agent to build UI. This connects your agent directly to component registries and a real browser, so it can pull polished components and test the site itself instead of you doing it by hand.
 
@@ -74,17 +74,17 @@ This is a genuinely good practice to demo live if a panel member asks about your
 
 ---
 
-## 3. VengeanceUI — no official MCP, use it directly
+## 3. Graphify — project knowledge graph
 
-VengeanceUI is a free, MIT-licensed, copy-paste animated component library (React + Tailwind + Framer Motion) aimed at landing pages — good for the Home page hero and any section that wants a bit of motion polish. It does **not** currently publish its own MCP server, so pull it in one of two ways:
+**What it does:** Builds an AST-parsed knowledge graph of the codebase (`graphify-out/graph.json`), so your coding agent can answer "where does X live / what touches X" with a scoped subgraph query instead of grepping the whole repo. Combined with the `graphify` skill and `graphify update .` after changes, it keeps the agent's navigation cheap and accurate as the project grows.
 
-**Option A — direct copy-paste (simplest):**
+For this project, the knowledge graph was generated with:
+```bash
+graphify update .
 ```
-Go to the VengeanceUI docs, find a component that fits [hero section / animated feature grid / etc.], and copy its source directly into src/components/.
-```
+and queried live with `graphify query "..."` / `graphify path A B` during development.
 
-**Option B — via a registry MCP that indexes it:**
-Some community component marketplaces (e.g. 21st.dev, shadcn.io) index third-party libraries including Aceternity-style animated components and can be pulled through their own MCP servers if you want everything sourced through one pipeline. This is optional — don't add a third MCP server just for this if Option A is fast enough.
+> **Note on animation:** this site has no extra animated-component library. The deliberate motion moments (splash title, page headers, scroll reveals, the `/lesson` framework stepper, the `/activity` chips) are all hand-built from **Motion** (`motion/react`, formerly Framer Motion). The generic wrappers (`FadeIn`, `PageHeader`, `RevealSection`, `AnimatedTitle`) live in `src/components/motion/`, while the bespoke pieces (`SplashScreen`, `FrameworkTimeline`, `ActivityChips`) live directly in `src/components/`. See `02_UI_LIBRARY_REFERENCES.md`.
 
 ---
 
@@ -92,6 +92,6 @@ Some community component marketplaces (e.g. 21st.dev, shadcn.io) index third-par
 
 1. Scaffold the project from `00_MASTER_BUILD_PROMPT.md` first — routing, pages, data layer, base Tailwind styling.
 2. Connect the **shadcn MCP** and pull in structural components (cards, nav, badges, tabs) as you build out each page.
-3. Pull 1–2 **VengeanceUI** components by hand for the hero and one standout animated moment (per the "spend your motion budget in one place" design principle).
+3. Build the animated moments by hand with **Motion** (`motion/react`) — the generic wrappers in `src/components/motion/` (`FadeIn`, `PageHeader`, `RevealSection`, `AnimatedTitle`) plus the bespoke `SplashScreen`, `FrameworkTimeline`, and `ActivityChips`. No extra component library; spend the motion budget in one place.
 4. Once the site is functionally complete, connect **Playwright MCP** and have the agent walk every route at three breakpoints, fixing whatever it finds.
 5. Do a final manual pass yourself the night before — sit in the audience's seat and click through it as a stranger would.

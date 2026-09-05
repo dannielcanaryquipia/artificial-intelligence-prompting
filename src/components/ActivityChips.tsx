@@ -1,40 +1,40 @@
 import { useState } from "react";
-import { motion, useReducedMotion } from "motion/react";
-import { Check, ArrowRight } from "@phosphor-icons/react";
+import { motion, AnimatePresence, useReducedMotion } from "motion/react";
+import { Check, ArrowRight, Question, CaretDown } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 
 const elements = [
   {
     id: "context",
     name: "Context",
-    missing: "No background given — the AI doesn't know your situation or skill level.",
-    why: "Without context, the AI gives generic advice that might not apply to your specific assignment or experience.",
+    missing: "No background given — the AI doesn't know your skill level or why you want to learn.",
+    why: "Without context, the AI can't tailor the roadmap — a busy professional, a student, or a total beginner each need a very different plan.",
   },
   {
     id: "task",
     name: "Task",
-    missing: "No specific task defined — 'help me' could mean anything.",
-    why: "Vague requests get vague answers. Being specific about what you need helps the AI focus on solving your actual problem.",
+    missing: "No specific goal defined — 'learning roadmap' for what end purpose?",
+    why: "A roadmap to 'use AI at work' looks completely different from one for 'build AI products'. Being specific about your goal helps the AI scope the path.",
   },
   {
     id: "format",
     name: "Format",
-    missing: "No format specified — the AI might give a long essay when you need a quick checklist.",
-    why: "Telling the AI how to structure its answer saves you from reading through irrelevant information.",
+    missing: "No format specified — the AI might return a generic essay instead of a practical schedule.",
+    why: "Telling the AI how to structure its answer (week-by-week, skills, practice prompts, resources) makes the roadmap actually usable instead of abstract.",
   },
   {
     id: "constraints",
     name: "Constraints",
-    missing: "No constraints set — the AI might rewrite your entire project instead of just fixing the specific issue.",
-    why: "Constraints prevent over-engineering and keep the AI focused on exactly what you need.",
+    missing: "No constraints set — the AI might suggest paid tools or a plan that takes hours a day.",
+    why: "Constraints keep the roadmap realistic. Budget, time per day, and resource limits stop the plan from over-committing you.",
   },
 ];
 
 export function ActivityChips() {
   const [selected, setSelected] = useState<string[]>([]);
   const [showFix, setShowFix] = useState(false);
+  const [showProblem, setShowProblem] = useState(false);
   const reduceMotion = useReducedMotion();
 
   const toggleChip = (id: string) => {
@@ -46,17 +46,71 @@ export function ActivityChips() {
   const allSelected = selected.length === elements.length;
 
   return (
-    <div className="w-full max-w-2xl mx-auto">
+    <div className="w-full max-w-4xl mx-auto">
+      {/* Problem reveal */}
+      <div className="mb-6">
+        <button
+          type="button"
+          onClick={() => setShowProblem((prev) => !prev)}
+          aria-expanded={showProblem}
+          className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent-tint
+                     px-4 py-2 font-mono text-sm font-medium text-accent-deep
+                     hover:bg-accent/15 active:bg-accent/25 transition-all duration-200"
+        >
+          <Question size={16} weight="duotone" />
+          {showProblem ? "Hide the problem" : "What's the problem?"}
+          <motion.span
+            animate={{ rotate: showProblem ? 180 : 0 }}
+            transition={reduceMotion ? { duration: 0 } : { duration: 0.2 }}
+            className="inline-block"
+          >
+            <CaretDown size={14} weight="bold" />
+          </motion.span>
+        </button>
+
+        <AnimatePresence initial={false}>
+          {showProblem && (
+            <motion.div
+              key="problem"
+              initial={reduceMotion ? false : { opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={reduceMotion ? undefined : { opacity: 0, height: 0 }}
+              transition={
+                reduceMotion
+                  ? { duration: 0 }
+                  : { duration: 0.3, ease: [0.16, 1, 0.3, 1] }
+              }
+              className="overflow-hidden"
+            >
+              <Card className="mt-4 bg-surface border-surface-border
+                               border-l-4 border-l-accent">
+                <CardContent className="py-5 md:py-6">
+                  <span className="font-mono text-xs md:text-sm text-accent uppercase tracking-wider block mb-2">
+                    The problem
+                  </span>
+                  <p className="font-sans text-sm md:text-base text-content-primary leading-relaxed">
+                    Meet Danniel, a complete beginner with no coding experience. He wants to
+                    learn AI prompting so he can use AI tools for his studies and future work —
+                    but he&rsquo;s never asked an AI for a plan before. So he types the first
+                    thing that comes to mind:
+                  </p>
+                </CardContent>
+              </Card>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
       {/* The weak prompt */}
       <Card className="mb-6 bg-red-tint/50
                        border-red/20
                        border-l-4 border-l-red">
-        <CardContent className="py-6">
-          <span className="font-mono text-xs text-red uppercase tracking-wider block mb-2">
+        <CardContent className="py-6 md:py-8">
+          <span className="font-mono text-xs md:text-sm text-red uppercase tracking-wider block mb-2">
             Weak prompt
           </span>
-          <p className="font-mono text-base text-content-primary">
-            &ldquo;help me with my assignment&rdquo;
+          <p className="font-mono text-base md:text-lg text-content-primary">
+            &ldquo;create a learning roadmap for AI prompting&rdquo;
           </p>
         </CardContent>
       </Card>
@@ -102,11 +156,11 @@ export function ActivityChips() {
               >
                 <Card className="bg-accent-tint/50
                                border-accent/20">
-                  <CardContent className="py-4">
-                    <p className="font-mono text-sm text-accent-deep font-medium mb-1">
+                  <CardContent className="py-5 md:py-6">
+                    <p className="font-mono text-sm md:text-base text-accent-deep font-medium mb-1">
                       {element.missing}
                     </p>
-                    <p className="font-sans text-sm text-content-secondary">
+                    <p className="font-sans text-sm md:text-base text-content-secondary leading-relaxed">
                       {element.why}
                     </p>
                   </CardContent>
@@ -142,16 +196,17 @@ export function ActivityChips() {
           <Card className="bg-emerald-tint/50
                           border-emerald/20
                           border-l-4 border-l-emerald">
-            <CardContent className="py-6">
-              <span className="font-mono text-xs text-emerald uppercase tracking-wider block mb-2">
+            <CardContent className="py-6 md:py-8">
+              <span className="font-mono text-xs md:text-sm text-emerald uppercase tracking-wider block mb-2">
                 Improved prompt
               </span>
-              <p className="font-mono text-sm text-content-primary leading-relaxed">
-                &ldquo;I'm a second-year IT student (Context). My Python assignment asks me
-                to analyze a CSV file of student grades and calculate the average for
-                each subject (Task). Please give me a step-by-step explanation with
-                code I can run in VS Code (Format). Keep it under 50 lines and use
-                only the pandas library (Constraints).&rdquo;
+              <p className="font-mono text-sm md:text-base text-content-primary leading-relaxed">
+                &ldquo;I'm a complete beginner with no coding experience (Context). I want to
+                learn prompt engineering well enough to use AI tools effectively for
+                study and work (Task). Please give me a week-by-week roadmap with
+                specific skills, sample prompts to practice, and resources to use
+                (Format). Keep it under 30 minutes per day, and include free resources
+                only (Constraints).&rdquo;
               </p>
             </CardContent>
           </Card>

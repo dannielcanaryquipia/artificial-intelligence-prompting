@@ -1,12 +1,14 @@
 import { PageHeader } from "@/components/motion/PageHeader";
 import { Card, CardContent } from "@/components/ui/card";
 import { ActivityChips } from "@/components/ActivityChips";
+import { WhatWeLearned } from "@/components/WhatWeLearned";
 
 export function Activity() {
   return (
     <div>
       {/* Header */}
       <PageHeader
+        fillViewport
         title="Try It Yourself"
         subtitle="Take a weak prompt and identify what's missing. Click each element to see why it matters, then reveal the improved version."
       />
@@ -33,6 +35,9 @@ export function Activity() {
           </Card>
         </div>
       </section>
+
+      {/* Wrap-up */}
+      <WhatWeLearned />
     </div>
   );
 }

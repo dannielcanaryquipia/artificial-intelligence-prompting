@@ -1,0 +1,7 @@
+linkedin="https://www.linkedin.com/in/danniel-canary-quipia-121bb6416/"
+github="https://github.com/dannielcanaryquipia"
+facebook="https://www.facebook.com/danniel.canary.quipia.2024"
+instagram="https://www.instagram.com/anonymous.14b36"
+email="dannielcanaryq@gmail.com"
+
+github-repo-link="https://github.com/dannielcanaryquipia/artificial-intelligence-prompting"

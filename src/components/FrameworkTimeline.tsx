@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { CheckCircle, Circle } from "@phosphor-icons/react";
-import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
 const steps = [
@@ -10,7 +9,8 @@ const steps = [
     name: "Context",
     description:
       "What's the situation? Set the scene so the AI understands your background and constraints.",
-    example: "I'm a second-year IT student working on a database assignment",
+    example:
+      "I'm Danniel, a first-year student learning JavaScript for-loops this week",
     color: "blue",
   },
   {
@@ -18,7 +18,7 @@ const steps = [
     name: "Task",
     description:
       "What exactly do you want done? Be specific, not vague.",
-    example: "Explain why this SQL query returns all rows instead of filtering",
+    example: "Find the bug(s) in the loop conditions and comparison logic",
     color: "accent",
   },
   {
@@ -26,7 +26,8 @@ const steps = [
     name: "Format",
     description:
       "How should the answer be structured? A list, code only, step-by-step, a short paragraph.",
-    example: "Give me a numbered list of things to check, with code examples",
+    example:
+      "List each bug with a one-line explanation, then show corrected code only for the affected lines",
     color: "emerald",
   },
   {
@@ -34,7 +35,8 @@ const steps = [
     name: "Constraints",
     description:
       "What should it avoid or stay within? Length, tools allowed, don't rewrite everything.",
-    example: "Keep the fix minimal — don't restructure the rest of the function",
+    example:
+      "Don't rewrite the whole function using a different approach like `Set` — I need to understand what's wrong with the loop version specifically, since that's what we're learning this week",
     color: "stone",
   },
 ];

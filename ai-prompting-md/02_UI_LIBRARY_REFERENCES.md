@@ -1,74 +1,83 @@
-# UI Component Library References
+# UI & Build Stack References — The Real Build, Not Mock Libraries
 
-> **How to use this file:** These are free, real component libraries — not invented. Use the "prompt" under each one to ask your coding agent to pull the relevant component. This same list (trimmed to name + one-line description) should appear on the site's `/resources` page under "How this site was built" — it's honest, and it doubles as a small demonstration of AI-assisted dev practice during your demo.
-
----
-
-## 1. shadcn/ui — the foundation
-**What it is:** The base component system (50+ accessible, unstyled-by-default primitives — buttons, cards, tabs, dialogs) that most of the libraries below are built on top of. Free, open source, installs via CLI or MCP.
-**Use for:** Cards, nav, tabs, badges — the structural skeleton of every page.
-**Prompt:**
-```
-Using the shadcn MCP, install a card, tabs, and badge component and adapt them to this project's color tokens defined in tailwind.config.
-```
-
-## 2. Magic UI — free animated components
-**What it is:** 150+ animated React + Tailwind + Framer Motion components, MIT licensed, fully free (no pro tier gate on the core library).
-**Use for:** The animated timeline (great fit for the prompting framework steps on `/lesson`), marquee/logo-style credential strip on `/about`.
-**Prompt:**
-```
-Find Magic UI's timeline component and adapt it to show the four-step prompting framework (Context, Task, Format, Constraints) as an interactive vertical timeline.
-```
-
-## 3. Aceternity UI — animated landing-page effects
-**What it is:** ~260+ motion-rich components (aurora backgrounds, bento grids, 3D cards, scroll reveals), published as a shadcn-compatible registry. Free tier covers most components; some templates are paid.
-**Use for:** A restrained hero background treatment on `/` — pick ONE effect, don't stack several (per the "spend your motion budget in one place" principle).
-**Prompt:**
-```
-Show me Aceternity UI's bento-grid and aurora-background components. I want to use exactly one of these, sparingly, on the homepage hero — recommend which fits a technical/instructional tone rather than a flashy SaaS tone.
-```
-
-## 4. VengeanceUI — free animated landing components
-**What it is:** MIT-licensed, copy-paste animated component library focused on landing pages.
-**Use for:** One standout section — e.g. a feature-grid or animated CTA section.
-**Prompt:**
-```
-Pull a feature-grid component from VengeanceUI's docs and adapt its copy to describe the four objectives of this lesson.
-```
-See `01_MCP_SETUP_GUIDE.md` section 3 for how to pull this one in (no dedicated MCP yet).
-
-## 5. Origin UI — clean, unstyled-friendly primitives
-**What it is:** Free, Tailwind + React components with a plainer, less "flashy" aesthetic than the animation-heavy libraries above.
-**Use for:** Form-like or utility elements on `/activity` (the chip-select interaction) where clarity matters more than flourish.
-**Prompt:**
-```
-Find Origin UI's chip/toggle-group component and adapt it for a "select which prompt elements are missing" interaction.
-```
-
-## 6. 21st.dev — component marketplace / search layer
-**What it is:** A searchable marketplace indexing components from shadcn/ui, Aceternity, Magic UI, and many independent design engineers, each with a live preview and installable source. Free to browse; some installs are rate-limited without an account.
-**Use for:** A single search point when you're not sure which library has what you need.
-**Prompt:**
-```
-Search 21st.dev for a "before/after comparison slider" component I can adapt for showing weak vs. improved prompts side by side.
-```
+> **How to use this file:** This project is built on a small, real, production stack — not a pile of copy-paste demo libraries. This file documents exactly what is installed (see `package.json`) and where each piece is used. The same list (trimmed to name + one-line description) appears on the site's `/resources` page under "How this site was built" — it's honest, and it doubles as a demonstration of AI-assisted dev practice during your demo.
 
 ---
 
-## Suggested Component → Section Mapping
+## The stack (all real, all pinned in `package.json`)
 
-| Site section | Library | Component type |
+### React 19 — `https://react.dev`
+**What it is:** The UI library. `react ^19.2.8`.
+**Used for:** Every component and page in `src/`. Declarative components + client-side state.
+
+### Vite 8 — `https://vite.dev`
+**What it is:** The build tool and dev server (`vite ^8.2.2`), with `@vitejs/plugin-react`.
+**Used for:** `npm run dev` → localhost; `npm run build` → `tsc -b && vite build`.
+
+### TypeScript — `https://www.typescriptlang.org`
+**What it is:** Typed JavaScript (`typescript ~6.0.2`). Interfaces for data (`PromptExample`, `CertificationIssuer`, `BuildStack`, `CaseStudy`, `NavItem`, …) keep content structured and safe to edit.
+**Used for:** All `src/` source; strict-mode builds via `tsc -b`.
+
+### Tailwind CSS v4 — `https://tailwindcss.com`
+**What it is:** Utility-first CSS (`tailwindcss ^4.3.3`, loaded through `@tailwindcss/postcss`). Design tokens (ink/paper families, `accent`/`accent-deep`/`accent-tint`, `surface-border`) are defined as CSS variables in `src/index.css` and consumed by arbitrary-value utilities.
+**Used for:** All styling — no inline styles, no CSS modules.
+
+### shadcn/ui — `https://ui.shadcn.com`
+**What it is:** Accessible, unstyled-by-default components (Card, Button, Badge, Tabs, Dialog, Accordion) installed via the shadcn CLI and adapted to this project's amber design tokens — not copy-pasted marketing blocks.
+**Used for:** The structural skeleton: card grids, badges, buttons, the objective dialogs (`Dialog` on `/`), and the embedded lesson plan (`Accordion` on `/lesson`). Pull new components with:
+```
+npx shadcn@latest add card button badge tabs dialog accordion
+```
+
+### Radix UI — `https://www.radix-ui.com`
+**What it is:** The headless, accessible primitives that shadcn/ui wraps (`radix-ui ^1.6.7` — Slot, Dialog, Accordion, and friends). We depend on it transitively and directly; it's why the Dialog and Accordion interactions keep full keyboard + screen-reader behavior.
+
+### Motion — `https://motion.dev` (formerly Framer Motion)
+**What it is:** The animation library (`motion ^13.2.0`), imported as `motion/react`.
+**Used for:** The deliberate animated moments — the generic wrappers in `src/components/motion/` (`FadeIn`, `PageHeader`, `RevealSection` honoring `prefers-reduced-motion`, `AnimatedTitle`), plus the bespoke `SplashScreen` (letter-by-letter title reveal on load), `FrameworkTimeline` (the `/lesson` stepper), and `ActivityChips` (the `/activity` interaction) in `src/components/`. No extra component library — motion budget spent in one place.
+
+### React Router v7 — `https://reactrouter.com`
+**What it is:** Client-side routing (`react-router-dom ^7.18.3`).
+**Used for:** The persistent `<Layout>` with nav + footer wrapping all six routes via `<Outlet />`.
+
+### Phosphor Icons — `https://phosphoricons.com`
+**What it is:** An icon set (`@phosphor-icons/react ^2.1.10`).
+**Used for:** Section icons (Lightbulb, Target, Wrench), social icons on `/about`, framework step icons, footer icons.
+
+### Utility glue
+**What it is:** `class-variance-authority` + `clsx` + `tailwind-merge` (via `cn()`), plus the `cn` helper package — the standard shadcn class-composition stack.
+**Used for:** Variant-aware button/badge classes.
+
+### Drinks, for quality
+**What it is:** `oxlint ^1.79.0` (`npm run lint`) and Playwright (`test-site.py` + `@playwright/test`) for the route-by-route QA tour.
+**Used for:** The "evidence before done" gate on every change.
+
+---
+
+## AI tooling that built the site (not UI libraries — dev workflow)
+
+- **OpenCode CLI** — the 5-agent dev team (dev-build, design-studio, game-dev, qa-review, ops-planning) that scaffolded, wired, and reviewed the site.
+- **Graphify** — the project knowledge graph (AST-parsed) used for codebase navigation; kept current with `graphify update .`.
+- **Markdown instruction files** — `AGENTS.md`, `.opencode/TEAM-GUIDE.md`, this `ai-prompting-md/` brief set. The master prompt (file 00) is the seed; these are the operating rules.
+
+---
+
+## Suggested Component → Section Mapping (what actually shipped)
+
+| Site section | Source | Component |
 |---|---|---|
-| Home hero | Aceternity UI (one effect only) | Background treatment |
-| Before/after prompt demo | 21st.dev search → shadcn primitives | Toggle/slider |
-| Lesson framework diagram | Magic UI | Interactive timeline |
+| Home hero + before/after demo | shadcn Card + hand-built demo (`PromptComparison`) | Static comparison, no live API |
+| Lesson framework diagram | Hand-built with `motion/react` | `FrameworkTimeline` stepper |
 | Case study cards | shadcn/ui | Card grid |
-| Activity chip interaction | Origin UI | Toggle group / chips |
-| Credentials grid | shadcn/ui | Badge + card grid |
-| Feature/objectives section | VengeanceUI | Animated feature grid |
+| Activity chip interaction | Hand-built with `motion/react` | `ActivityChips` toggle chips |
+| Credentials grid | shadcn/ui | Badge grid via `CredentialGroup` |
+| Pre-entry splash | Hand-built with `motion/react` | `SplashScreen` + `AnimatedTitle` |
+| Scroll reveals + page headers | Hand-built with `motion/react` | `RevealSection`, `PageHeader` |
+| Lesson wrap-up | shadcn/ui | `Accordion` (embedded lesson plan) |
+| Icons | Phosphor Icons | Section + social icons |
 
 ---
 
 ## Attribution note for the `/resources` page
 
-All libraries above are free and open source (MIT or similarly permissive licenses) at the component level. When you credit them on the site, a simple line per library is enough — name, one-sentence description, link to the docs. This is good practice regardless of the job interview context.
+Every stack entry above is free and open source. The `/resources` page credits each one (name, one-sentence description, docs link) from `src/data/references.ts` (`buildStack` + `learningResources`) — honest, accurate, and a working example of AI-assisted engineering during your demo.

@@ -2,16 +2,23 @@ import {
   FacebookLogo,
   InstagramLogo,
   GithubLogo,
+  LinkedinLogo,
+  EnvelopeSimple,
+  FilePdf,
 } from "@phosphor-icons/react";
 import { PageHeader } from "@/components/motion/PageHeader";
 import { CredentialGroup } from "@/components/CredentialGroup";
 import { certifications } from "@/data/certifications";
 import { socialLinks } from "@/data/site";
+import instructorPhoto from "@/assets/about-image/profile.jpg";
+import resumePdf from "@/assets/cv/Danniel_Canary_Quipia_ATS_resume_.pdf";
 
 const socialIcons: Record<string, typeof GithubLogo> = {
   facebook: FacebookLogo,
   instagram: InstagramLogo,
   github: GithubLogo,
+  linkedin: LinkedinLogo,
+  email: EnvelopeSimple,
 };
 
 export function About() {
@@ -19,9 +26,20 @@ export function About() {
     <div>
       {/* Header */}
       <PageHeader
+        fillViewport
         title="About the Instructor"
         titleClassName="mb-6"
       >
+        <div className="mt-8 mb-8">
+          <div className="inline-block rounded-2xl border border-surface-border bg-surface p-2">
+            <img
+              src={instructorPhoto}
+              alt="Danniel Canary, the instructor"
+              className="h-40 w-40 rounded-xl object-cover"
+            />
+          </div>
+        </div>
+
         <div className="max-w-prose">
           <p className="font-sans text-base text-content-primary leading-relaxed mb-4">
             BS Information Technology graduate, Cum Laude, from Sorsogon State
@@ -35,6 +53,20 @@ export function About() {
             are two of the certifications directly behind how this lesson was
             structured.
           </p>
+        </div>
+
+        <div className="mt-8 flex items-center gap-3">
+          <a
+            href={resumePdf}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-lg bg-accent-deep px-5 py-2.5 text-sm font-medium
+                       text-white hover:brightness-95 active:brightness-90
+                       transition-all duration-150"
+          >
+            <FilePdf size={18} weight="bold" />
+            View Resume
+          </a>
         </div>
 
         <div className="flex items-center gap-3 mt-6">

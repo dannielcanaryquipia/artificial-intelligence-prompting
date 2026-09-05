@@ -6,7 +6,7 @@
 
 ## 0. Design Read
 
-> **Reading this as:** Instructional teaching demo site for an IT instructor panel + students, with a technical/editorial language (terminal warmth meets humanist clarity), leaning toward Tailwind v4 + shadcn/ui primitives + one restrained Aceternity/VengeanceUI animated moment.
+> **Reading this as:** Instructional teaching demo site for an IT instructor panel + students, with a technical/editorial language (terminal warmth meets humanist clarity), built on Tailwind v4 + shadcn/ui primitives, with the motion moments hand-built from Motion (`motion/react`).
 
 **Audience:** IT department hiring panel (evaluating technical competence) + college students (learning from the lesson). The site must signal "skilled developer built this" — not "a template was filled in."
 
@@ -62,10 +62,12 @@ A terminal/editor-inspired palette with **warmth** — not cold blue-grey corpor
 | `blue-500` | `#3B82F6` | `text-blue-500` | Informational callouts, "context" element |
 | `blue-50` | `#EFF6FF` | `bg-blue-50` | Info background tint |
 
-### 2.4 Tailwind Config Extension
+### 2.4 Token Configuration
+
+> **Reference implementation (Tailwind v4):** there is **no** `tailwind.config.ts` in this repo — v4 config lives in CSS, so these tokens ship as an `@theme` block in `src/index.css` (see `DESIGN.md`). The v3-style sample below is kept for illustration, but the live hex values are the ones in `src/index.css`. Dark mode was planned in this spec but **not shipped** — the reference repo is light-mode only — and the shipped `accent-deep` is `#B45309` (amber-700).
 
 ```js
-// tailwind.config.ts
+// tailwind.config.ts — illustrative v3 sample; NOT in the reference repo
 import type { Config } from 'tailwindcss'
 
 const config: Config = {
@@ -84,19 +86,14 @@ const config: Config = {
           hover: '#FBBF24',      // amber-400
           active: '#D97706',     // amber-600
           tint: '#FFFBEB',       // amber-50
-          deep: '#451A03',       // amber-950
+          deep: '#B45309',       // amber-700 — shipped as accent-deep
         },
         content: {
           primary: '#292524',    // stone-800
           secondary: '#78716C',  // stone-500
           muted: '#A8A29E',      // stone-400
         },
-        // Dark mode overrides
-        dark: {
-          surface: '#0C0A09',    // stone-950
-          raised: '#1C1917',     // stone-900
-          border: '#292524',     // stone-800
-        },
+        // Dark mode overrides — planned here, but NOT shipped (light mode only)
       },
       fontFamily: {
         mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
@@ -179,28 +176,26 @@ Two families. One signals "technical precision" (monospace for prompts/code). On
 
 ## 4. Component Mapping
 
-Pull from these sources via MCP or copy-paste. **Do not hand-build components that exist in these libraries.**
+Sources: **shadcn/ui** primitives for structure, **Phosphor Icons** for iconography, and **Motion** (`motion/react`) for the small set of hand-built animated pieces. This is the actual stack the reference repo ships in `package.json` — see `02_UI_LIBRARY_REFERENCES.md`.
 
-| Site Section | Component Needed | Source | MCP / Method |
+| Site Section | Component Needed | Source | Method |
 |---|---|---|---|
-| **Home Hero** | Background treatment (subtle animated grid or gradient) | **Aceternity UI** — Background Gradient or Spinning Text (restrained) | Copy-paste from Aceternity docs. ONE effect only. |
-| **Before/After Demo** | Side-by-side comparison with toggle state | **21st.dev search** → find "comparison slider" or "before after" component. Fall back to shadcn `Tabs` + custom layout | `shadcn` MCP for Tabs primitive; custom wiring for the content |
-| **Lesson Framework** | Interactive vertical timeline / stepper | **Magic UI** — Timeline component | Copy-paste from Magic UI docs. Adapt to 4-step framework. |
-| **Case Study Cards** | Card grid with image, title, description | **shadcn/ui** — Card component | `shadcn` MCP: `install card component` |
-| **Activity Chips** | Toggle group / clickable chip selector | **Origin UI** — Toggle Group or Chip component | Copy-paste from Origin UI. Simpler than shadcn for this. |
-| **Credentials Grid** | Badge + issuer grouping | **shadcn/ui** — Badge component | `shadcn` MCP: `install badge component` |
-| **Nav (top)** | Navigation with active states, mobile hamburger | **shadcn/ui** — Navigation Menu or custom with shadcn Button | `shadcn` MCP for primitives; hand-wire responsive behavior |
+| **Home Hero** | Header with title reveal | **Hand-built** (`PageHeader`) + Motion `motion/react` | `FadeIn` / staggered reveal, `prefers-reduced-motion` respected |
+| **Before/After Demo** | Side-by-side weak/improved comparison with toggle state | **Hand-built** `PromptComparison` (shadcn `Tabs`-style state + `AnimatePresence`) | Local component state; content from `promptExamples.ts` |
+| **Lesson Framework** | Interactive vertical stepper | **Hand-built** `FrameworkTimeline` + Motion | Motion layout animations, Phosphor step icons |
+| **Case Study Cards** | Card grid with image, title, description | **shadcn/ui** Card | `npx shadcn@latest add card` |
+| **Activity Chips** | Toggle group / clickable chip selector | **Hand-built** `ActivityChips` + Motion | Local state toggle, `AnimatePresence` feedback |
+| **Credentials Grid** | Badge + issuer grouping | **shadcn/ui** Badge | `npx shadcn@latest add badge` |
+| **Nav (top)** | Navigation with active states, mobile hamburger | **React Router** `NavLink` + shadcn Button | `className` via `isActive`; hand-wired responsive behavior |
 | **Footer** | Simple link list + attribution | **Custom** using Tailwind | No library needed — straightforward layout |
-| **Page Transitions** | Subtle fade/slide on route change | **Framer Motion** (`motion/react`) `AnimatePresence` | `npm install motion` |
-| **Mobile Nav** | Slide-out drawer or bottom sheet | **shadcn/ui** — Sheet component | `shadcn` MCP: `install sheet component` |
+| **Page Transitions** | Subtle fade on route change | **Motion** (`motion/react`) `AnimatePresence` | Only where it adds polish; keep subtle |
 
 ### 4.1 Component Installation Order
 
-1. `npx shadcn@latest add card badge tabs navigation-menu sheet`
-2. Copy-paste from Aceternity UI docs → `src/components/hero-background.tsx`
-3. Copy-paste from Magic UI docs → `src/components/framework-timeline.tsx`
-4. Copy-paste from Origin UI docs → `src/components/activity-chips.tsx`
-5. Wire Framer Motion `AnimatePresence` for route transitions
+1. `npx shadcn@latest add card badge button tabs dialog accordion`
+2. `npm i motion react-router-dom @phosphor-icons/react` (already in the reference `package.json`)
+3. Hand-build `PageHeader`, `RevealSection`, `FadeIn`, `AnimatedTitle` (in `components/motion/`) — small reusable motion wrappers
+4. Hand-build `PromptComparison`, `FrameworkTimeline`, `ActivityChips`, `SplashScreen`, `DetailDialog` on top of shadcn primitives + Motion
 
 ---
 
@@ -447,13 +442,20 @@ src/
 │   │   ├── Navbar.tsx
 │   │   ├── MobileNav.tsx
 │   │   └── Footer.tsx
-│   ├── ui/                          ← shadcn components (card, badge, tabs, sheet, button)
-│   ├── PromptComparison.tsx          ← THE animated before/after demo
-│   ├── FrameworkTimeline.tsx         ← Magic UI timeline for 4-step framework
-│   ├── ActivityChips.tsx             ← Origin UI chip selector
-│   ├── CaseStudyCard.tsx             ← shadcn card adapted
-│   └── CredentialBadge.tsx           ← shadcn badge adapted
+│   ├── ui/                          ← shadcn components (card, badge, button, tabs, dialog, accordion)
+│   ├── motion/                      ← hand-built wrappers (FadeIn, PageHeader, RevealSection, AnimatedTitle)
+│   ├── SplashScreen.tsx             ← pre-entry letter-by-letter title reveal
+│   ├── PromptComparison.tsx         ← THE animated before/after demo
+│   ├── FrameworkTimeline.tsx        ← hand-built Motion stepper (4-step framework)
+│   ├── ActivityChips.tsx            ← hand-built Motion chip selector
+│   ├── DetailDialog.tsx             ← objective dialogs on Home (shadcn Dialog)
+│   ├── CaseStudyCard.tsx            ← shadcn card adapted
+│   ├── CredentialGroup.tsx          ← shadcn badge adapted
+│   ├── WhatWeLearned.tsx            ← lesson wrap-up on /activity
+│   └── QrCard.tsx                   ← hero QR container
 ├── data/
+│   ├── site.ts
+│   ├── navigation.ts
 │   ├── promptExamples.ts
 │   ├── caseStudies.ts
 │   ├── certifications.ts
@@ -465,10 +467,9 @@ src/
 │   ├── Activity.tsx
 │   ├── About.tsx
 │   └── Resources.tsx
-├── App.tsx
+├── App.tsx                          ← <SplashScreen /> + <BrowserRouter> with six routes
 ├── main.tsx
-├── index.css                         ← Tailwind directives + font imports
-└── tailwind.config.ts                ← Extended with design tokens
+└── index.css                        ← Tailwind v4 tokens (v4 config lives in CSS — no tailwind.config.ts)
 ```
 
 ---
@@ -481,6 +482,6 @@ src/
 
 **The one thing that must NOT happen:** The site must not look like it came from a template gallery. Stone palette + amber accent + JetBrains Mono for prompts + left-aligned editorial layout = a distinctive, intentional visual language that no generic Bootstrap/Tailwind starter kit would produce.
 
-**Component sources are real.** shadcn, Aceternity, Magic UI, Origin UI, VengeanceUI — all free, all MIT. Pull via MCP or copy-paste. Don't hand-build what these libraries already ship.
+**Component sources are honest.** shadcn/ui + Radix UI for structure, Phosphor Icons for iconography, Motion for the hand-built animated pieces — all real, all in `package.json`, all free. Build on the shadcn primitives; hand-build the few animated wrappers with Motion; don't reach for a marketing-stack of copy-paste libraries.
 
 **Motion budget:** Spend it on the before/after toggle. Everything else gets subtle hover states and a page crossfade. No parallax, no scroll-hijack, no infinite loops. Respect `prefers-reduced-motion`.
