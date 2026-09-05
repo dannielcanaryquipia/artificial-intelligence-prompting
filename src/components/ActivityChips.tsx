@@ -103,7 +103,7 @@ export function ActivityChips() {
                 <Card className="bg-accent-tint/50
                                border-accent/20">
                   <CardContent className="py-4">
-                    <p className="font-mono text-sm text-accent font-medium mb-1">
+                    <p className="font-mono text-sm text-accent-deep font-medium mb-1">
                       {element.missing}
                     </p>
                     <p className="font-sans text-sm text-content-secondary">

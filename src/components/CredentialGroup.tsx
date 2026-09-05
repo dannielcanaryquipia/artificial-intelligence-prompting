@@ -22,9 +22,9 @@ export function CredentialGroup({ issuer }: CredentialGroupProps) {
             key={cert}
             variant="outline"
             className="font-mono text-xs
-                       bg-accent-tint/50
-                       text-accent
-                       border-accent/20"
+                        bg-accent-tint/50
+                        text-accent-deep
+                        border-accent/20"
           >
             {cert}
           </Badge>
