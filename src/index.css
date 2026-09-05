@@ -7,11 +7,11 @@
   --color-surface-raised: #F5F5F4;
   --color-surface-border: #E7E5E4;
 
-  --color-accent: #F97316;
-  --color-accent-hover: #EA580C;
-  --color-accent-active: #C2410C;
-  --color-accent-tint: #FFF7ED;
-  --color-accent-deep: #9A3412;
+  --color-accent: #F59E0B;
+  --color-accent-hover: #FBBF24;
+  --color-accent-active: #D97706;
+  --color-accent-tint: #FFFBEB;
+  --color-accent-deep: #B45309;
 
   --color-content-primary: #292524;
   --color-content-secondary: #78716C;
@@ -27,7 +27,7 @@
   /* shadcn/ui compatible variables */
   --color-background: #FAFAF9;
   --color-foreground: #292524;
-  --color-primary: #F97316;
+  --color-primary: #F59E0B;
   --color-primary-foreground: #FFFFFF;
   --color-secondary: #F5F5F4;
   --color-secondary-foreground: #292524;
@@ -42,7 +42,7 @@
   --color-card-foreground: #292524;
   --color-border: #E7E5E4;
   --color-input: #E7E5E4;
-  --color-ring: #F97316;
+  --color-ring: #F59E0B;
   --radius: 0.5rem;
 
   /* Font families */
