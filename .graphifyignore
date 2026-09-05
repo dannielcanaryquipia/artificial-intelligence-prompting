@@ -1,0 +1,8 @@
+.opencode/
+ai-prompting-md/
+docs/
+public/
+dist/
+raw/
+node_modules/
+test-site.py
