@@ -3,7 +3,7 @@ import { RevealSection } from "@/components/motion/RevealSection";
 import { ArrowSquareOut } from "@phosphor-icons/react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { learningResources, uiLibraries } from "@/data/references";
+import { learningResources, buildStack } from "@/data/references";
 
 export function Resources() {
   return (
@@ -83,7 +83,7 @@ export function Resources() {
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
-            {uiLibraries.map((lib) => (
+            {buildStack.map((lib) => (
               <a
                 key={lib.name}
                 href={lib.link}
@@ -124,11 +124,12 @@ export function Resources() {
             <CardContent className="py-4">
               <p className="font-sans text-sm text-content-primary">
                 <strong className="font-semibold">Tech stack:</strong> React
-                19 + Vite, TypeScript, Tailwind CSS v4, shadcn/ui, Motion
-                (motion/react), React Router v7, Phosphor Icons. Built with
-                AI-assisted development using the OpenCode 5-agent dev team and
-                the Graphify codebase knowledge graph — a meta-demonstration of
-                the lesson itself.
+                19 + Vite, TypeScript, Tailwind CSS v4, shadcn/ui + Radix UI,
+                Motion (motion/react), React Router v7, Phosphor Icons. Built
+                with AI-assisted development: OpenCode CLI running a 5-agent dev
+                team, the Graphify codebase knowledge graph, and markdown files
+                (AGENTS.md, specs, plans) as the context and instructions the
+                agents follow — a meta-demonstration of the lesson itself.
               </p>
             </CardContent>
           </Card>

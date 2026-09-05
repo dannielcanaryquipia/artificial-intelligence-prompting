@@ -5,49 +5,64 @@ export interface LearningResource {
   free?: boolean;
 }
 
-export interface UILibrary {
+export interface BuildStack {
   name: string;
   description: string;
   link: string;
 }
 
-export const learningResources: LearningResource[] = [];
+export const learningResources: LearningResource[] = [
+  {
+    title: "Anthropic Skilljar",
+    description:
+      "Anthropic's free learning portal — the AI Fluency framework, prompt engineering, and courses on MCPs, AI agents, and AI skills.",
+    link: "https://anthropic.skilljar.com",
+    free: true,
+  },
+  {
+    title: "W3Schools",
+    description:
+      "Free, hands-on tutorials for the fundamentals — HTML, CSS, JavaScript, SQL, and more. Learn the baseline before relying on AI.",
+    link: "https://www.w3schools.com/",
+    free: true,
+  },
+];
 
-export const uiLibraries: UILibrary[] = [
+export const buildStack: BuildStack[] = [
+  {
+    name: "React",
+    description:
+      "The UI framework powering every page. Functional components, hooks, and the react-router v7 setup live in src/.",
+    link: "https://react.dev",
+  },
+  {
+    name: "Vite",
+    description:
+      "The dev server and build tool — TypeScript + Vite 8 with instant HMR. Run it with `npm run dev`.",
+    link: "https://vite.dev",
+  },
+  {
+    name: "Tailwind CSS",
+    description:
+      "Utility-first styling on top of design tokens (amber accent, stone text) defined in src/index.css.",
+    link: "https://tailwindcss.com",
+  },
   {
     name: "shadcn/ui",
     description:
-      "The base component system — 50+ accessible, unstyled-by-default primitives. The foundation most other libraries build on.",
+      "The component system this site is built on — accessible, copy-paste primitives (Card, Button, Badge, Tabs).",
     link: "https://ui.shadcn.com",
   },
   {
     name: "Radix UI",
     description:
-      "The accessible, unstyled primitives that shadcn/ui components wrap — used directly in this project (Slot, Tabs).",
+      "The accessible, unstyled primitives that shadcn/ui wraps — used directly here too (Slot, Tabs).",
     link: "https://www.radix-ui.com",
   },
   {
-    name: "Magic UI",
+    name: "OpenCode CLI",
     description:
-      "150+ animated React + Tailwind + Framer Motion components. MIT licensed, fully free.",
-    link: "https://magicui.design",
-  },
-  {
-    name: "Aceternity UI",
-    description:
-      "~260+ motion-rich components (aurora backgrounds, bento grids, 3D cards, scroll reveals) published as a shadcn-compatible registry.",
-    link: "https://ui.aceternity.com",
-  },
-  {
-    name: "Origin UI",
-    description:
-      "Free, Tailwind + React components with a plainer, less 'flashy' aesthetic. Great for form-like elements.",
-    link: "https://originui.com",
-  },
-  {
-    name: "21st.dev",
-    description:
-      "A searchable marketplace indexing components from shadcn/ui, Aceternity, Magic UI, and independent design engineers.",
-    link: "https://21st.dev",
+      "The terminal AI coding agent that wrote this site, directed by a 5-agent dev team defined in .opencode/.",
+    link: "https://opencode.ai/docs",
   },
 ];

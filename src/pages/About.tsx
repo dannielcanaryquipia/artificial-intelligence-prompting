@@ -1,6 +1,18 @@
+import {
+  FacebookLogo,
+  InstagramLogo,
+  GithubLogo,
+} from "@phosphor-icons/react";
 import { PageHeader } from "@/components/motion/PageHeader";
 import { CredentialGroup } from "@/components/CredentialGroup";
 import { certifications } from "@/data/certifications";
+import { socialLinks } from "@/data/site";
+
+const socialIcons: Record<string, typeof GithubLogo> = {
+  facebook: FacebookLogo,
+  instagram: InstagramLogo,
+  github: GithubLogo,
+};
 
 export function About() {
   return (
@@ -23,6 +35,36 @@ export function About() {
             are two of the certifications directly behind how this lesson was
             structured.
           </p>
+        </div>
+
+        <div className="flex items-center gap-3 mt-6">
+          {socialLinks.map((social) => {
+            const Icon = socialIcons[social.id];
+            const base =
+              "h-11 w-11 rounded-full border border-surface-border bg-surface flex items-center justify-center text-content-secondary transition-colors duration-150";
+            return social.href ? (
+              <a
+                key={social.id}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={social.label}
+                title={social.label}
+                className={`${base} hover:text-accent hover:border-accent/40`}
+              >
+                <Icon size={20} weight="duotone" />
+              </a>
+            ) : (
+              <span
+                key={social.id}
+                aria-label={social.label}
+                title={`Paste your ${social.label} URL in src/data/site.ts`}
+                className={`${base} opacity-50 cursor-not-allowed`}
+              >
+                <Icon size={20} weight="duotone" />
+              </span>
+            );
+          })}
         </div>
       </PageHeader>
 

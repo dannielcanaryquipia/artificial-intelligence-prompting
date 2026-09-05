@@ -1,9 +1,10 @@
 import { PageHeader } from "@/components/motion/PageHeader";
 import { RevealSection } from "@/components/motion/RevealSection";
-import { Lightbulb, Target, Wrench } from "@phosphor-icons/react";
+import { Lightbulb, Target, Wrench, GithubLogo } from "@phosphor-icons/react";
 import { Card, CardContent } from "@/components/ui/card";
 import { PromptComparison } from "@/components/PromptComparison";
 import { homepageExample } from "@/data/promptExamples";
+import { projectGithubUrl } from "@/data/site";
 
 const objectives = [
   {
@@ -40,7 +41,32 @@ export function Home() {
         }
         subtitle="A short lesson on prompting as a real, learnable skill for IT work — not a trick, a technique."
         titleClassName="mb-6"
-      />
+      >
+        <div className="mt-8">
+          {projectGithubUrl ? (
+            <a
+              href={projectGithubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-lg bg-accent px-5 py-2.5 text-sm font-medium
+                         text-white hover:bg-accent-hover active:bg-accent-active
+                         transition-colors duration-150"
+            >
+              <GithubLogo size={18} weight="bold" />
+              View the project on GitHub
+            </a>
+          ) : (
+            <span
+              title="Add the project GitHub URL in src/data/site.ts"
+              className="inline-flex items-center gap-2 rounded-lg bg-accent/20 px-5 py-2.5 text-sm font-medium
+                         text-accent-deep cursor-not-allowed"
+            >
+              <GithubLogo size={18} weight="bold" />
+              View the project on GitHub
+            </span>
+          )}
+        </div>
+      </PageHeader>
 
       {/* Before/After Demo */}
       <section className="py-16 px-4 sm:px-6

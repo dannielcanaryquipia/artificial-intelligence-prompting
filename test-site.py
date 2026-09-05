@@ -185,7 +185,7 @@ def test_site():
             print("  Mobile nav opened")
 
             # Click a nav link in mobile
-            mobile_links = page_mobile.locator("[role='dialog'] a, nav a").all()
+            mobile_links = page_mobile.locator("[role='dialog'] a").all()
             for link in mobile_links:
                 text = link.inner_text().strip()
                 if "Lesson" in text:
