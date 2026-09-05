@@ -1,0 +1,24 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "shadcn": {
+      "type": "local",
+      "command": [
+        "npx",
+        "shadcn@latest",
+        "mcp"
+      ],
+      "enabled": true
+    },
+    "graphify": {
+      "type": "local",
+      "command": [
+        "C:\\Users\\Danniel Canary\\AppData\\Local\\pipx\\pipx\\venvs\\graphifyy\\Scripts\\python.exe",
+        "-m",
+        "graphify.serve",
+        "C:\\Users\\Danniel Canary\\.opencode\\graphify-out\\graph.json"
+      ],
+      "enabled": true
+    }
+  }
+}
