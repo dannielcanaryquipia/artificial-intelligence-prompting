@@ -128,7 +128,9 @@
 
 **Easing:** `[0.16, 1, 0.3, 1]` (ease-out-expo) for all page/prompt transitions.
 
-**Banned:** No parallax, no scroll-hijack, no infinite loops, no typing animations.
+**Banned:** No parallax, no scroll-hijack, no infinite loops.
+
+**Authorized exception — simulated chat demo (`PromptComparison`):** character-by-character prompt typing and AI response streaming, plus the blinking caret and "thinking…" spinner, are the point of that component. They are gated: the whole interaction respects `useReducedMotion()` (users jump straight to the completed state) and the global reduced-motion CSS stops the blink/spin. Do not reuse these typing animations anywhere else.
 
 All motion respects `useReducedMotion()` from `motion/react`.
 

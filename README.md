@@ -7,7 +7,7 @@ A short, teachable lesson on prompting as a real, learnable skill for IT work �
 Prompting is treated as a real engineering skill, not a marketing topic. The site:
 
 - **Teaches a 4-step framework** — Context, Task, Format, Constraints — applied to everyday IT work: debugging, understanding error messages, learning new tools.
-- **Demonstrates with real before/after pairs** — the featured example is a first-year student's buggy nested loop: the weak prompt gets a "correct but wrong" answer (a `Set` rewrite that ignores what was asked) while the CTFC prompt finds both actual bugs.
+- **Demonstrates with real before/after pairs** — the featured example is a first-year student's buggy nested loop: the weak prompt gets a "correct but wrong" answer (a `Set` rewrite that ignores what was asked) while the CTFC prompt finds both actual bugs. The comparison plays out as a **simulated chat** — you click the prompt box to make it type itself, press Enter, and watch the AI response stream back.
 - **Lets the visitor practice** — an interactive activity where you spot the element missing from a weak prompt and reveal the improved version (usable live with a classroom).
 - **Shows the instructor's credibility** — real certifications grouped by issuer (Anthropic, DataCamp, Cisco, TESDA), case studies of real projects, a resume, and social links.
 
@@ -15,7 +15,7 @@ Prompting is treated as a real engineering skill, not a marketing topic. The sit
 
 | Route | Page | Content |
 |---|---|---|
-| `/` | Home | One-shot animated splash, hero, live before/after prompt demo, objectives with detail dialogs, "what I actually needed to understand" wrap-up |
+| `/` | Home | One-shot animated splash, hero, live simulated-chat before/after prompt demo, objectives with detail dialogs, "what I actually needed to understand" wrap-up |
 | `/lesson` | Lesson | The C–T–F–C framework as an interactive timeline, IT-context examples, embedded lesson plan |
 | `/case-studies` | Case Studies | Four real projects built via structured prompting |
 | `/activity` | Try It | Interactive: find what's missing in a weak prompt |
@@ -64,7 +64,8 @@ src/
 │   ├── motion/          Motion wrappers (FadeIn, AnimatedTitle, PageHeader, RevealSection)
 │   ├── ui/              shadcn primitives (card, badge, button, tabs, dialog, accordion)
 │   ├── SplashScreen.tsx Pre-entry letter-by-letter splash
-│   ├── PromptComparison.tsx  FrameworkTimeline.tsx  ActivityChips.tsx
+│   ├── PromptComparison.tsx  Interactive simulated-chat prompt demo (types, Enter, AI "thinking"/streaming) — see `docs/refinements/2026-09-06-promptcomparison-simulated-chat.md`
+│   ├── FrameworkTimeline.tsx  ActivityChips.tsx
 │   ├── DetailDialog.tsx  CaseStudyCard.tsx  CredentialGroup.tsx
 │   ├── WhatWeLearned.tsx  QrCard.tsx
 ├── data/                Content: site, navigation, promptExamples, caseStudies, certifications, references
@@ -76,7 +77,7 @@ src/
 
 ## Design System
 
-Amber accent (`#F59E0B`) on a stone palette — see [`DESIGN.md`](DESIGN.md) for tokens/type/spacing/animation and anti-slop rules, and the full spec in [`ai-prompting-md/DESIGN_DIRECTION.md`](ai-prompting-md/DESIGN_DIRECTION.md).
+Amber accent (`#F59E0B`) on a stone palette — see [`DESIGN.md`](DESIGN.md) for tokens/type/spacing/animation and anti-slop rules, and the full spec in [`ai-prompting-md/DESIGN_DIRECTION.md`](ai-prompting-md/DESIGN_DIRECTION.md). `DESIGN.md` documents one authorized exception to the "no typing animations" rule: the simulated chat in `PromptComparison` (reduced-motion gated; typing animations stay banned everywhere else).
 
 ## Docs Index
 
@@ -92,6 +93,7 @@ Amber accent (`#F59E0B`) on a stone palette — see [`DESIGN.md`](DESIGN.md) for
 | [`ai-prompting-md/content-md-guide/03_SITE_CONTENT_OUTLINE.md`](ai-prompting-md/content-md-guide/03_SITE_CONTENT_OUTLINE.md) | Legacy pointer → canonical `03_SITE_CONTENT_OUTLINE.md` |
 | [`docs/superpowers/specs/2026-09-05-opencode-wiring-and-quality-pass-design.md`](docs/superpowers/specs/2026-09-05-opencode-wiring-and-quality-pass-design.md) | Approved wiring + quality-pass design (historical) |
 | [`docs/superpowers/plans/2026-09-05-opencode-wiring-and-quality-pass.md`](docs/superpowers/plans/2026-09-05-opencode-wiring-and-quality-pass.md) | Step-by-step plan that implemented the design (historical) |
+| [`docs/refinements/2026-09-06-promptcomparison-simulated-chat.md`](docs/refinements/2026-09-06-promptcomparison-simulated-chat.md) | The PromptComparison simulated-chat refinement: interaction states, animation timings, implementation notes, QA findings, verification |
 
 ## Before the Demo
 
